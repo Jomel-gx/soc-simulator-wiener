@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Ciberseguridad ATM - BCP / Wiener</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="scanlines"></div>
+
+    <div id="tsparticles" class="d-none"></div>
+
+    <section id="pantalla-bienvenida" class="pantalla-modulo blade-runner-bg d-flex align-items-center justify-content-center position-relative">
+        <div id="warning-matrix" class="warning-matrix-container"></div>
+        
+        <div class="container text-center py-5 z-10">
+            <div class="d-flex justify-content-center align-items-center mb-4">
+                <img src="logo.png" alt="Universidad Norbert Wiener" class="wiener-logo-img">
+            </div>
+            
+            <div class="mb-4">
+                <span class="wiener-cyber-text text-white" style="font-family: 'Orbitron', sans-serif; letter-spacing: 4px;">Universidad Norbert Wiener</span>
+                <div class="wiener-line my-3 mx-auto" style="width: 50%;"></div>
+                <p class="text-danger small font-monospace mt-1 glow-text-red fw-bold" style="letter-spacing: 2px;">FACULTAD DE INGENIERÍA Y NEGOCIOS</p>
+            </div>
+            
+            <h1 class="display-3 text-white fw-bold mb-2" style="font-family: 'Orbitron', sans-serif; text-shadow: 0 0 15px #00ffff, 0 0 30px #00ffff;">SOC SIMULATOR</h1>
+            <h2 class="h5 mb-5" style="font-family: 'Orbitron', sans-serif; letter-spacing: 3px;">
+                <span class="neon-dark-red">RED TEAM</span> <span class="text-white opacity-50 mx-2">VS</span> <span class="neon-dark-blue">BLUE TEAM</span>
+            </h2>
+            
+            <div class="mx-auto px-5 py-3 mb-5 border-neon-red shadow-neon-red pulse-container glass-panel d-inline-block" style="border-radius: 8px;">
+                <div class="text-danger glow-text-red fs-6 mb-2 font-monospace" style="letter-spacing: 3px;">
+                    <i class="fa-solid fa-satellite-dish fa-spin me-2"></i> INTERACCIONES GLOBALES
+                </div>
+                <div id="click-counter-display" class="text-danger fw-bold glow-text-red" style="font-family: 'Orbitron', sans-serif; font-size: 4.5rem; letter-spacing: 8px; line-height: 1;">000000</div>
+            </div>
+            
+            <div>
+                <button id="btnIniciar" class="cyber-btn btn-neon-red btn-lg font-monospace px-5 py-3 mt-2 fs-5">
+                    <i class="fa-solid fa-power-off me-2"></i> INICIAR SIMULACIÓN
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <section id="pantalla-modulo1" class="pantalla-modulo d-none py-5 position-relative">
+        <div class="container h-100 d-flex flex-column justify-content-between z-10">
+            <div class="text-center mb-4 glass-panel p-3 rounded border-neon-cyan">
+                <h2 class="text-cyan font-monospace fw-bold mb-2">MÓDULO 1: EXTRACCIÓN FÍSICA VS DEFENSA BIOMÉTRICA</h2>
+                <p class="text-light mt-2 mx-auto max-width-text" style="font-size: 0.95rem;">
+                    <strong class="text-warning">¿Qué pasa aquí?</strong> Un intruso intenta clonar y leer de forma física la memoria interna del cajero (RAM Scraping). La defensa responde bloqueando el sistema mediante reconocimiento biométrico y un doble factor de autenticación (MFA).
+                </p>
+            </div>
+            <div class="row my-auto justify-content-center">
+                <div class="col-md-5 mb-4 mb-md-0">
+                    <div class="card custom-card glass-panel border-neon-red h-100">
+                        <div class="card-header bg-transparent border-bottom border-danger text-danger fw-bold fs-5 text-center"><i class="fa-solid fa-skull-crossbones"></i> Ataque: RAM Scraping</div>
+                        <div class="card-body text-center d-flex flex-column justify-content-center p-4">
+                            <button id="btnAtaque1" class="cyber-btn btn-neon-red btn-lg w-100 mb-4">EJECUTAR INYECCIÓN</button>
+                            <div id="hexDump" class="cyber-terminal p-3 d-none text-start" style="height: 180px; overflow-y: hidden; font-size: 0.85rem; color: #0f0;"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-5">
+                    <div class="card custom-card glass-panel border-neon-green h-100">
+                        <div class="card-header bg-transparent border-bottom border-success text-success fw-bold fs-5 text-center"><i class="fa-solid fa-fingerprint"></i> Defensa: Biométrica MFA</div>
+                        <div class="card-body text-center position-relative d-flex flex-column justify-content-center align-items-center p-4">
+                            <button id="btnDefensa1" class="cyber-btn btn-neon-green btn-lg w-100 mb-4" disabled>FORZAR AUTENTICACIÓN</button>
+                            <div id="estadoDefensa" class="text-secondary fw-bold fs-5 mt-2 font-monospace">SISTEMA EN ESPERA</div>
+                            
+                            <div id="animacionScan" class="d-none mt-4 mx-auto" style="width: 150px; height: 150px; border: 2px solid #00ff00; border-radius: 15px; position: relative; overflow: hidden; box-shadow: 0 0 20px rgba(0,255,0,0.2) inset; transition: all 0.3s ease;">
+                                <div class="scan-circle-1" style="position: absolute; top: 15%; left: 25%; width: 50%; height: 40%; border: 2px dashed rgba(0, 255, 0, 0.5); border-radius: 50%;"></div>
+                                <div class="scan-circle-2" style="position: absolute; top: 60%; left: 15%; width: 70%; height: 50%; border: 2px dashed rgba(0, 255, 0, 0.5); border-radius: 50% 50% 0 0;"></div>
+                                <div class="laser-scan"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="text-end mt-4">
+                <button id="btnIrModulo2" class="cyber-btn btn-neon-cyan px-4 py-2">Siguiente Módulo &gt;</button>
+            </div>
+        </div>
+    </section>
+
+    <section id="pantalla-modulo2" class="pantalla-modulo d-none py-5 position-relative">
+        <div class="container h-100 d-flex flex-column justify-content-between z-10">
+            <div class="text-center mb-4 glass-panel p-3 rounded border-neon-cyan">
+                <h2 class="text-cyan font-monospace fw-bold mb-2">MÓDULO 2: BOTNET CARDING VS MOTOR IA</h2>
+                <p class="text-light mt-2 mx-auto max-width-text" style="font-size: 0.95rem;">
+                    <strong class="text-warning">¿Qué pasa aquí?</strong> Una red masiva de computadoras infectadas (Botnet) bombardea el sistema validando miles de tarjetas. Un Motor de Inteligencia Artificial analiza el tráfico en tiempo real y bloquea conexiones maliciosas.
+                </p>
+            </div>
+            <div class="card custom-card glass-panel border-neon-cyan my-auto" id="modulo2-card">
+                <div class="card-header bg-transparent border-bottom border-info text-cyan fw-bold fs-5 text-center"><i class="fa-solid fa-network-wired"></i> Panel Operativo: Fraude vs IA</div>
+                <div class="card-body d-flex gap-4 flex-column flex-md-row p-4">
+                    <div class="d-flex flex-column justify-content-center" style="flex: 1;">
+                        <button id="btnCarding" class="cyber-btn btn-neon-red w-100 mb-4 py-2">LANZAR BOTNET</button>
+                        <div class="text-danger mb-2 fw-bold fs-6 font-monospace">FUERZA DE ATAQUE</div>
+                        <div class="progress bg-dark border border-danger shadow-neon-red" style="height: 18px;">
+                            <div id="barraAtaque" class="progress-bar bg-danger progress-bar-striped progress-bar-animated" style="width: 0%; transition: width 0.3s ease;"></div>
+                        </div>
+                    </div>
+                    <div class="d-flex flex-column" style="flex: 2;">
+                        <div class="node-map mb-3 rounded border-neon-cyan shadow-neon-cyan" id="mapaNodos"></div>
+                        <div id="firewallLogs" class="cyber-terminal p-3 font-monospace" style="height: 150px; overflow-y: hidden; font-size: 0.85rem; color: #f55;">
+                            <div class="typewriter-line text-secondary">&gt; Motor de IA en espera...</div>
+                        </div>
+                    </div>
+                    <div class="d-flex flex-column justify-content-center" style="flex: 1;">
+                        <button id="btnDefensa2" class="cyber-btn btn-neon-green w-100 mb-4 py-2" disabled>ACTIVAR MOTOR IA</button>
+                        <div class="text-success mb-2 fw-bold fs-6 font-monospace">EFICIENCIA DE IA</div>
+                        <div class="progress bg-dark border border-success shadow-neon-green" style="height: 18px;">
+                            <div id="barraDefensa" class="progress-bar bg-success progress-bar-striped progress-bar-animated" style="width: 0%; transition: width 0.3s ease;"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="text-end mt-4">
+                <button id="btnIrModulo3" class="cyber-btn btn-neon-cyan px-4 py-2">Siguiente Módulo &gt;</button>
+            </div>
+        </div>
+    </section>
+
+    <section id="pantalla-modulo3" class="pantalla-modulo d-none py-5 position-relative">
+        <div class="container h-100 d-flex flex-column justify-content-between z-10">
+            <div class="text-center mb-4 glass-panel p-3 rounded border-neon-cyan">
+                <h2 class="text-cyan font-monospace fw-bold mb-2">MÓDULO 3: INTERCEPCIÓN VS PURGA ZERO-TRUST</h2>
+                <p class="text-light mt-2 mx-auto max-width-text" style="font-size: 0.95rem;">
+                    <strong class="text-warning">¿Qué pasa aquí?</strong> El atacante infiltra virus mediante Phishing. La defensa activa Confianza Cero (Zero-Trust), localizando equipos infectados y cortando conexiones para desinfectar la red.
+                </p>
+            </div>
+            <div class="row my-auto" id="modulo3-row">
+                <div class="col-md-6 mb-4 mb-md-0">
+                    <div class="card custom-card glass-panel border-neon-red h-100" id="card-phishing">
+                        <div class="card-header bg-transparent border-bottom border-danger text-danger fw-bold fs-5 text-center"><i class="fa-solid fa-envelope-open-text"></i> Intercepción (Phishing)</div>
+                        <div class="card-body p-4">
+                            <button id="btnPhishing" class="cyber-btn btn-neon-red w-100 mb-4 py-2">DESPLEGAR PAYLOADS</button>
+                            <div class="text-danger mb-2 fw-bold fs-6 font-monospace">INFECCIÓN DE RED</div>
+                            <div class="node-map rounded mb-3 position-relative border-neon-red shadow-neon-red" id="mapaPhishing" style="height: 120px;"></div>
+                            <div class="progress bg-dark border border-danger mb-3 shadow-neon-red" style="height: 12px;">
+                                <div id="barraInfeccion" class="progress-bar bg-danger progress-bar-striped progress-bar-animated" style="width: 0%; transition: width 0.3s ease;"></div>
+                            </div>
+                            <div id="phishingLogs" class="cyber-terminal p-3 font-monospace" style="height: 120px; overflow-y: hidden; font-size: 0.8rem; color: #f55;">
+                                <div class="typewriter-line text-secondary">&gt; Esperando orden de despliegue...</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card custom-card glass-panel border-neon-green h-100" id="card-zerotrust">
+                        <div class="card-header bg-transparent border-bottom border-success text-success fw-bold fs-5 text-center"><i class="fa-solid fa-shield-virus"></i> Purga Zero-Trust</div>
+                        <div class="card-body p-4">
+                            <button id="btnEducacion" class="cyber-btn btn-neon-green w-100 mb-4 py-2" disabled>ACTIVAR ZERO-TRUST</button>
+                            <div class="text-success mb-2 fw-bold fs-6 text-end font-monospace">INTEGRIDAD DEL SISTEMA</div>
+                            <div class="node-map rounded mb-3 position-relative border-neon-green shadow-neon-green" id="mapaZeroTrust" style="height: 120px;"></div>
+                            <div class="progress bg-dark border border-success mb-3 shadow-neon-green" style="height: 12px;">
+                                <div id="barraIntegridad" class="progress-bar bg-success progress-bar-striped progress-bar-animated" style="width: 100%; transition: width 0.3s ease;"></div>
+                            </div>
+                            <div id="zeroTrustLogs" class="cyber-terminal p-3 text-success font-monospace" style="height: 120px; overflow-y: hidden; font-size: 0.8rem;">
+                                <div class="typewriter-line text-secondary">&gt; Sistema a la espera de anomalías...</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="text-end mt-4">
+                <button id="btnIrGlosario" class="cyber-btn btn-neon-cyan px-4 py-2">Ver Glosario de Términos &gt;</button>
+            </div>
+        </div>
+    </section>
+
+    <section id="pantalla-glosario" class="pantalla-modulo d-none py-5 position-relative">
+        <div class="container h-100 d-flex flex-column justify-content-between z-10">
+            <div class="text-center mb-5 glass-panel p-3 rounded border-neon-cyan">
+                <h2 class="text-cyan font-monospace display-6 fw-bold">GLOSARIO DE CIBERSEGURIDAD</h2>
+                <p class="text-light mt-2 mx-auto">Conceptos clave explicados de manera sencilla.</p>
+            </div>
+            <div class="row g-4 overflow-auto px-2" style="max-height: 65vh;">
+                <div class="col-md-4"><div class="card glass-panel border-neon-cyan h-100 custom-card"><div class="card-body"><h5 class="card-title text-cyan fw-bold"><i class="fa-solid fa-globe"></i> SOC SIMULATOR</h5><p class="card-text text-light small">Centro de control virtual donde simulamos ataques y defensas.</p></div></div></div>
+                <div class="col-md-4"><div class="card glass-panel border-neon-red h-100 custom-card"><div class="card-body"><h5 class="card-title text-danger fw-bold"><i class="fa-solid fa-user-ninja"></i> RED TEAM</h5><p class="card-text text-light small">Los "chicos malos" éticos. Expertos que prueban las defensas.</p></div></div></div>
+                <div class="col-md-4"><div class="card glass-panel border-neon-green h-100 custom-card"><div class="card-body"><h5 class="card-title text-success fw-bold"><i class="fa-solid fa-user-shield"></i> BLUE TEAM</h5><p class="card-text text-light small">Los guardianes. Defienden y protegen el sistema.</p></div></div></div>
+                <div class="col-md-4"><div class="card glass-panel border-neon-red h-100 custom-card"><div class="card-body"><h5 class="card-title text-danger fw-bold"><i class="fa-solid fa-microchip"></i> RAM Scraping</h5><p class="card-text text-light small">Robar información leyendo la memoria de la computadora del cajero.</p></div></div></div>
+                <div class="col-md-4"><div class="card glass-panel border-neon-green h-100 custom-card"><div class="card-body"><h5 class="card-title text-success fw-bold"><i class="fa-solid fa-fingerprint"></i> MFA Biométrica</h5><p class="card-text text-light small">Usar huellas y múltiples pruebas para confirmar quién eres.</p></div></div></div>
+                <div class="col-md-4"><div class="card glass-panel border-neon-red h-100 custom-card"><div class="card-body"><h5 class="card-title text-danger fw-bold"><i class="fa-solid fa-robot"></i> BOTNET / Carding</h5><p class="card-text text-light small">Ejército de PCs "zombi" probando tarjetas robadas.</p></div></div></div>
+                <div class="col-md-4"><div class="card glass-panel border-neon-green h-100 custom-card"><div class="card-body"><h5 class="card-title text-success fw-bold"><i class="fa-solid fa-brain"></i> MOTOR IA</h5><p class="card-text text-light small">Computadora entrenada para reaccionar rápido bloqueando anomalías.</p></div></div></div>
+                <div class="col-md-4"><div class="card glass-panel border-neon-red h-100 custom-card"><div class="card-body"><h5 class="card-title text-danger fw-bold"><i class="fa-solid fa-fish-fins"></i> Phishing</h5><p class="card-text text-light small">"Pescar" víctimas con correos engañosos para inyectar virus.</p></div></div></div>
+                <div class="col-md-4"><div class="card glass-panel border-neon-green h-100 custom-card"><div class="card-body"><h5 class="card-title text-success fw-bold"><i class="fa-solid fa-ban"></i> PURGA ZERO-TRUST</h5><p class="card-text text-light small">"Confianza Cero". Asume la brecha, aísla y limpia equipos uno por uno.</p></div></div></div>
+            </div>
+            <div class="text-center mt-5">
+                <button id="btnReiniciarSimulacion" class="cyber-btn btn-neon-cyan px-5 py-3"><i class="fa-solid fa-rotate-left"></i> Volver al Inicio</button>
+            </div>
+        </div>
+    </section>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/tsparticles-slim@2.0.6/tsparticles.slim.bundle.min.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
