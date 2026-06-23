@@ -1,37 +1,131 @@
+let nodosM2, nodosM3Ataque, nodosM3Defensa;
+let intervaloM1, intervaloM2Ataque, intervaloM2Defensa, intervaloM3Ataque, intervaloM3Defensa;
+let battleInterval;
+
 // ==========================================
-// 0. MATRIZ DE WARNINGS (VS: RED TEAM / BLUE TEAM)
+// 0. MATRIZ DE WARNINGS Y BATALLA DE 15 SEGUNDOS
 // ==========================================
 function generateWarningMatrix() {
     const matrix = document.getElementById('warning-matrix');
     if (!matrix) return;
     matrix.innerHTML = ''; 
-    const icons = ['fa-triangle-exclamation', 'fa-skull-crossbones', 'fa-biohazard', 'fa-radiation', 'fa-bug'];
     
+    const fragment = document.createDocumentFragment();
+
+    const clashFlash = document.createElement('div');
+    clashFlash.className = 'clash-flash';
+    fragment.appendChild(clashFlash);
+
+    const icons = ['fa-triangle-exclamation', 'fa-skull-crossbones', 'fa-biohazard', 'fa-bug', 'fa-shield-halved', 'fa-bolt', 'fa-virus'];
+    
+    let redParticles = [];
+    let blueParticles = [];
+
     for (let i = 0; i < 200; i++) {
         let icon = document.createElement('i');
         let iconClass = icons[Math.floor(Math.random() * icons.length)];
+        let isRed = i < 100; 
+
+        let top = Math.random() * 90 + 5; 
+        let left = isRed ? (Math.random() * 30 + 5) : (Math.random() * 30 + 65); 
         let size = Math.random() * 1.5 + 0.8; 
-        let delay = Math.random() * 5;
-        let duration = Math.random() * 4 + 3;
-        let top, left;
-        let zone = Math.floor(Math.random() * 4); 
-        
-        if (zone === 0) { top = Math.random() * 100; left = Math.random() * 25; } 
-        else if (zone === 1) { top = Math.random() * 100; left = 75 + Math.random() * 25; } 
-        else if (zone === 2) { top = Math.random() * 25; left = Math.random() * 100; } 
-        else { top = 75 + Math.random() * 25; left = Math.random() * 100; } 
 
-        // LÓGICA DEL "VS": Si está en la mitad izquierda, es Rojo. Si está a la derecha, es Azul.
-        let teamClass = (left < 50) ? 'matrix-red' : 'matrix-blue';
-
-        icon.className = `fa-solid ${iconClass} matrix-icon ${teamClass}`;
+        icon.className = `fa-solid ${iconClass} matrix-icon ${isRed ? 'matrix-red' : 'matrix-blue'}`;
         icon.style.top = `${top}%`;
         icon.style.left = `${left}%`;
         icon.style.fontSize = `${size}rem`;
-        icon.style.opacity = (Math.random() * 0.4 + 0.1).toString(); 
-        icon.style.animation = `float-matrix ${duration}s ease-in-out ${delay}s infinite alternate`;
-        matrix.appendChild(icon);
+        
+        icon.dataset.origTop = top;
+        icon.dataset.origLeft = left;
+        icon.dataset.attacking = 'false';
+
+        icon.style.opacity = '0';
+        icon.style.transform = 'scale(0)';
+
+        fragment.appendChild(icon);
+        if (isRed) redParticles.push(icon); else blueParticles.push(icon);
     }
+    
+    matrix.appendChild(fragment);
+
+    // FASE 1: Spawn de 6 Segundos
+    let allParticles = [...redParticles, ...blueParticles];
+    allParticles.forEach(icon => {
+        let spawnDelay = Math.random() * 6; // Aparecen lentamente a lo largo de 6s
+        gsap.to(icon, {
+            opacity: Math.random() * 0.4 + 0.3, 
+            scale: 1, 
+            duration: 1, 
+            delay: spawnDelay, 
+            ease: "back.out(1.5)",
+            onComplete: () => {
+                gsap.to(icon, {
+                    y: (Math.random() - 0.5) * 15, x: (Math.random() - 0.5) * 15,
+                    duration: Math.random() * 2 + 2, repeat: -1, yoyo: true, ease: "sine.inOut"
+                });
+            }
+        });
+    });
+
+    // FASE 2: Batalla Loca (Comienza a los 6s y dura 9s. Total = 15 Segundos)
+    setTimeout(() => {
+        if (!document.getElementById('pantalla-bienvenida').classList.contains('d-none')) {
+            startCrazyBattle(redParticles, blueParticles, clashFlash);
+        }
+    }, 6000);
+
+    // Detener Batalla Loca a los 15s (Para no distraer eternamente y permitir el click)
+    setTimeout(() => {
+        clearInterval(battleInterval);
+    }, 15000);
+}
+
+function startCrazyBattle(redParticles, blueParticles, clashFlash) {
+    clearInterval(battleInterval); 
+    
+    // Incrementé la velocidad de disparo a 80ms para que sea más intenso
+    battleInterval = setInterval(() => {
+        let redP = redParticles[Math.floor(Math.random() * redParticles.length)];
+        let blueP = blueParticles[Math.floor(Math.random() * blueParticles.length)];
+
+        if (redP.dataset.attacking === 'true') redP = null;
+        if (blueP.dataset.attacking === 'true') blueP = null;
+
+        if (redP) fireParticle(redP, 1, clashFlash);   
+        if (blueP) fireParticle(blueP, -1, clashFlash); 
+    }, 80);
+}
+
+function fireParticle(particle, direction, clashFlash) {
+    particle.dataset.attacking = 'true';
+    gsap.killTweensOf(particle); 
+
+    let origTop = particle.dataset.origTop;
+    let origLeft = particle.dataset.origLeft;
+    let clashY = 45 + Math.random() * 10; 
+
+    let tl = gsap.timeline({
+        onComplete: () => {
+            gsap.set(particle, { left: `${origLeft}%`, top: `${origTop}%`, opacity: 0, scale: 0, rotation: 0 });
+            gsap.to(particle, {
+                opacity: Math.random() * 0.4 + 0.3, scale: 1, duration: 0.5, ease: "back.out(1.5)",
+                onComplete: () => {
+                    particle.dataset.attacking = 'false';
+                    gsap.to(particle, { y: (Math.random() - 0.5) * 15, x: (Math.random() - 0.5) * 15, duration: Math.random() * 2 + 2, repeat: -1, yoyo: true, ease: "sine.inOut" });
+                }
+            });
+        }
+    });
+
+    tl.to(particle, {
+        left: '50%', top: `${clashY}%`, scale: 2.5, opacity: 1, rotation: direction * 180, duration: 0.3 + Math.random() * 0.2, ease: "power2.in"
+    })
+    .to(particle, {
+        scale: 4, opacity: 0, duration: 0.1,
+        onStart: () => {
+            gsap.fromTo(clashFlash, { opacity: 0.9, scale: 0.5 }, { opacity: 0, scale: 1.5 + Math.random(), duration: 0.3, ease: "power2.out" });
+        }
+    });
 }
 
 // ==========================================
@@ -111,12 +205,8 @@ function crearNodos(contenedorId, cantidad) {
     return nodos;
 }
 
-// Variables Globales
-let nodosM2, nodosM3Ataque, nodosM3Defensa;
-let intervaloM1, intervaloM2Ataque, intervaloM2Defensa, intervaloM3Ataque, intervaloM3Defensa;
-
 // ==========================================
-// 3. GARBAGE COLLECTOR (ELIMINADOR DE BUGS)
+// 3. GARBAGE COLLECTOR
 // ==========================================
 function resetSimulations() {
     clearInterval(intervaloM1);
@@ -124,8 +214,10 @@ function resetSimulations() {
     clearInterval(intervaloM2Defensa);
     clearInterval(intervaloM3Ataque);
     clearInterval(intervaloM3Defensa);
+    clearInterval(battleInterval); 
+    
+    gsap.killTweensOf(".matrix-icon");
 
-    // M1 Reset
     document.getElementById('btnAtaque1').removeAttribute('disabled');
     document.getElementById('btnDefensa1').setAttribute('disabled', 'true');
     const scan1 = document.getElementById('animacionScan');
@@ -135,7 +227,6 @@ function resetSimulations() {
     document.getElementById('estadoDefensa').innerHTML = "SISTEMA EN ESPERA";
     clearTerminal('hexDump');
 
-    // M2 Reset
     document.getElementById('btnCarding').removeAttribute('disabled');
     document.getElementById('btnDefensa2').setAttribute('disabled', 'true');
     document.getElementById('barraAtaque').style.width = '0%';
@@ -144,7 +235,6 @@ function resetSimulations() {
     typeLog('firewallLogs', '<div class="typewriter-line text-secondary">&gt; Motor de IA en espera...</div>');
     nodosM2 = crearNodos('mapaNodos', 15);
 
-    // M3 Reset
     document.getElementById('btnPhishing').removeAttribute('disabled');
     document.getElementById('btnEducacion').setAttribute('disabled', 'true');
     document.getElementById('barraInfeccion').style.width = '0%';
@@ -159,7 +249,7 @@ function resetSimulations() {
 }
 
 // ==========================================
-// 4. NAVEGACIÓN Y ROUTING VISUAL
+// 4. ROUTING Y ARRANQUE ANTI-FOUC (INCLUYE TUTORIAL)
 // ==========================================
 const pantallas = {
     p0: document.getElementById('pantalla-bienvenida'),
@@ -175,6 +265,16 @@ function switchPantalla(ocultar, mostrar) {
     const tsDiv = document.getElementById('tsparticles');
     if(mostrar === pantallas.p1 || mostrar === pantallas.p2 || mostrar === pantallas.p3) {
         tsDiv.classList.remove('d-none'); 
+        
+        // Iniciar Tutorial Módulo 1 SOLO si es la primera vez
+        if(mostrar === pantallas.p1 && !localStorage.getItem('tutorialM1Done')) {
+            setTimeout(() => {
+                introJs().setOptions({
+                    nextLabel: 'Siguiente', prevLabel: 'Atrás', doneLabel: '¡A Jugar!', showStepNumbers: false
+                }).start();
+                localStorage.setItem('tutorialM1Done', 'true');
+            }, 1000);
+        }
     } else {
         tsDiv.classList.add('d-none'); 
     }
@@ -186,17 +286,35 @@ function switchPantalla(ocultar, mostrar) {
     }});
 }
 
-document.addEventListener('DOMContentLoaded', () => {
-    generateWarningMatrix(); 
-    initNeuralNetwork(); 
-    resetSimulations(); 
+window.addEventListener('load', () => {
+    requestAnimationFrame(() => {
+        setTimeout(() => {
+            initNeuralNetwork(); 
+            resetSimulations(); 
+            generateWarningMatrix(); 
+            
+            // Iniciar Tutorial de Bienvenida SOLO si es la primera vez
+            if(!localStorage.getItem('tutorialP0Done')) {
+                // Espera a que termine la batalla de 15s para no interrumpir el show
+                setTimeout(() => {
+                    introJs().setOptions({
+                        nextLabel: 'Siguiente', prevLabel: 'Atrás', doneLabel: 'Entendido', showStepNumbers: false
+                    }).start();
+                    localStorage.setItem('tutorialP0Done', 'true');
+                }, 15500); 
+            }
+        }, 150);
+    });
 });
 
 document.getElementById('btnIniciar').addEventListener('click', () => switchPantalla(pantallas.p0, pantallas.p1));
 document.getElementById('btnIrModulo2').addEventListener('click', () => switchPantalla(pantallas.p1, pantallas.p2));
 document.getElementById('btnIrModulo3').addEventListener('click', () => switchPantalla(pantallas.p2, pantallas.p3));
 document.getElementById('btnIrGlosario').addEventListener('click', () => switchPantalla(pantallas.p3, pantallas.pGlosario));
-document.getElementById('btnReiniciarSimulacion').addEventListener('click', () => switchPantalla(pantallas.pGlosario, pantallas.p0));
+document.getElementById('btnReiniciarSimulacion').addEventListener('click', () => {
+    switchPantalla(pantallas.pGlosario, pantallas.p0);
+    generateWarningMatrix(); 
+});
 
 // ==========================================
 // LÓGICA MÓDULO 1: RAM Scraping

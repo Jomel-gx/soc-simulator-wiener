@@ -7,6 +7,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intro.js/7.2.0/introjs.min.css">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -15,6 +16,7 @@
     <div id="tsparticles" class="d-none"></div>
 
     <section id="pantalla-bienvenida" class="pantalla-modulo blade-runner-bg d-flex align-items-center justify-content-center position-relative">
+        
         <div id="warning-matrix" class="warning-matrix-container"></div>
         
         <div class="container text-center py-5 z-10">
@@ -28,12 +30,12 @@
                 <p class="text-danger small font-monospace mt-1 glow-text-red fw-bold" style="letter-spacing: 2px;">FACULTAD DE INGENIERÍA Y NEGOCIOS</p>
             </div>
             
-            <h1 class="display-3 text-white fw-bold mb-2" style="font-family: 'Orbitron', sans-serif; text-shadow: 0 0 15px #00ffff, 0 0 30px #00ffff;">SOC SIMULATOR</h1>
+            <h1 class="display-3 text-white fw-bold mb-2" style="font-family: 'Orbitron', sans-serif; text-shadow: 0 0 15px #00ffff, 0 0 30px #00ffff;" data-intro="¡Bienvenido al SOC Simulator! Aquí aprenderás cómo el Red Team (Hackers) ataca y cómo el Blue Team (Defensas) protege los sistemas del banco." data-step="1">SOC SIMULATOR</h1>
             <h2 class="h5 mb-5" style="font-family: 'Orbitron', sans-serif; letter-spacing: 3px;">
                 <span class="neon-dark-red">RED TEAM</span> <span class="text-white opacity-50 mx-2">VS</span> <span class="neon-dark-blue">BLUE TEAM</span>
             </h2>
             
-            <div class="mx-auto px-5 py-3 mb-5 border-neon-red shadow-neon-red pulse-container glass-panel d-inline-block" style="border-radius: 8px;">
+            <div class="mx-auto px-5 py-3 mb-5 border-neon-red shadow-neon-red pulse-container glass-panel d-inline-block" style="border-radius: 8px;" data-intro="Este contador global en vivo registrará cada interacción tuya con el simulador, demostrando el volumen masivo de ataques cibernéticos diarios." data-step="2">
                 <div class="text-danger glow-text-red fs-6 mb-2 font-monospace" style="letter-spacing: 3px;">
                     <i class="fa-solid fa-satellite-dish fa-spin me-2"></i> INTERACCIONES GLOBALES
                 </div>
@@ -41,7 +43,7 @@
             </div>
             
             <div>
-                <button id="btnIniciar" class="cyber-btn btn-neon-red btn-lg font-monospace px-5 py-3 mt-2 fs-5">
+                <button id="btnIniciar" class="cyber-btn btn-neon-red btn-lg font-monospace px-5 py-3 mt-2 fs-5" data-intro="Haz clic aquí para iniciar el entrenamiento interactivo módulo por módulo. ¡Prepárate para defender la red!" data-step="3">
                     <i class="fa-solid fa-power-off me-2"></i> INICIAR SIMULACIÓN
                 </button>
             </div>
@@ -58,7 +60,7 @@
             </div>
             <div class="row my-auto justify-content-center">
                 <div class="col-md-5 mb-4 mb-md-0">
-                    <div class="card custom-card glass-panel border-neon-red h-100">
+                    <div class="card custom-card glass-panel border-neon-red h-100" data-intro="Aquí juegas el rol del ATACANTE (Red Team). Primero, presiona el botón rojo para inyectar el código malicioso y tratar de robar la información del cajero." data-step="4">
                         <div class="card-header bg-transparent border-bottom border-danger text-danger fw-bold fs-5 text-center"><i class="fa-solid fa-skull-crossbones"></i> Ataque: RAM Scraping</div>
                         <div class="card-body text-center d-flex flex-column justify-content-center p-4">
                             <button id="btnAtaque1" class="cyber-btn btn-neon-red btn-lg w-100 mb-4">EJECUTAR INYECCIÓN</button>
@@ -67,7 +69,7 @@
                     </div>
                 </div>
                 <div class="col-md-5">
-                    <div class="card custom-card glass-panel border-neon-green h-100">
+                    <div class="card custom-card glass-panel border-neon-green h-100" data-intro="Una vez que el ataque inicie y suene la alerta, juega el rol del DEFENSOR (Blue Team). Presiona el botón verde para activar el escáner biométrico y expulsar al atacante." data-step="5">
                         <div class="card-header bg-transparent border-bottom border-success text-success fw-bold fs-5 text-center"><i class="fa-solid fa-fingerprint"></i> Defensa: Biométrica MFA</div>
                         <div class="card-body text-center position-relative d-flex flex-column justify-content-center align-items-center p-4">
                             <button id="btnDefensa1" class="cyber-btn btn-neon-green btn-lg w-100 mb-4" disabled>FORZAR AUTENTICACIÓN</button>
@@ -178,21 +180,202 @@
     <section id="pantalla-glosario" class="pantalla-modulo d-none py-5 position-relative">
         <div class="container h-100 d-flex flex-column justify-content-between z-10">
             <div class="text-center mb-5 glass-panel p-3 rounded border-neon-cyan">
-                <h2 class="text-cyan font-monospace display-6 fw-bold">GLOSARIO DE CIBERSEGURIDAD</h2>
-                <p class="text-light mt-2 mx-auto">Conceptos clave explicados de manera sencilla.</p>
+                <h2 class="text-cyan font-monospace display-6 fw-bold">GLOSARIO VISUAL</h2>
+                <p class="text-light mt-2 mx-auto">Pasa el cursor sobre las tarjetas para ver cómo funciona cada concepto.</p>
             </div>
-            <div class="row g-4 overflow-auto px-2" style="max-height: 65vh;">
-                <div class="col-md-4"><div class="card glass-panel border-neon-cyan h-100 custom-card"><div class="card-body"><h5 class="card-title text-cyan fw-bold"><i class="fa-solid fa-globe"></i> SOC SIMULATOR</h5><p class="card-text text-light small">Centro de control virtual donde simulamos ataques y defensas.</p></div></div></div>
-                <div class="col-md-4"><div class="card glass-panel border-neon-red h-100 custom-card"><div class="card-body"><h5 class="card-title text-danger fw-bold"><i class="fa-solid fa-user-ninja"></i> RED TEAM</h5><p class="card-text text-light small">Los "chicos malos" éticos. Expertos que prueban las defensas.</p></div></div></div>
-                <div class="col-md-4"><div class="card glass-panel border-neon-green h-100 custom-card"><div class="card-body"><h5 class="card-title text-success fw-bold"><i class="fa-solid fa-user-shield"></i> BLUE TEAM</h5><p class="card-text text-light small">Los guardianes. Defienden y protegen el sistema.</p></div></div></div>
-                <div class="col-md-4"><div class="card glass-panel border-neon-red h-100 custom-card"><div class="card-body"><h5 class="card-title text-danger fw-bold"><i class="fa-solid fa-microchip"></i> RAM Scraping</h5><p class="card-text text-light small">Robar información leyendo la memoria de la computadora del cajero.</p></div></div></div>
-                <div class="col-md-4"><div class="card glass-panel border-neon-green h-100 custom-card"><div class="card-body"><h5 class="card-title text-success fw-bold"><i class="fa-solid fa-fingerprint"></i> MFA Biométrica</h5><p class="card-text text-light small">Usar huellas y múltiples pruebas para confirmar quién eres.</p></div></div></div>
-                <div class="col-md-4"><div class="card glass-panel border-neon-red h-100 custom-card"><div class="card-body"><h5 class="card-title text-danger fw-bold"><i class="fa-solid fa-robot"></i> BOTNET / Carding</h5><p class="card-text text-light small">Ejército de PCs "zombi" probando tarjetas robadas.</p></div></div></div>
-                <div class="col-md-4"><div class="card glass-panel border-neon-green h-100 custom-card"><div class="card-body"><h5 class="card-title text-success fw-bold"><i class="fa-solid fa-brain"></i> MOTOR IA</h5><p class="card-text text-light small">Computadora entrenada para reaccionar rápido bloqueando anomalías.</p></div></div></div>
-                <div class="col-md-4"><div class="card glass-panel border-neon-red h-100 custom-card"><div class="card-body"><h5 class="card-title text-danger fw-bold"><i class="fa-solid fa-fish-fins"></i> Phishing</h5><p class="card-text text-light small">"Pescar" víctimas con correos engañosos para inyectar virus.</p></div></div></div>
-                <div class="col-md-4"><div class="card glass-panel border-neon-green h-100 custom-card"><div class="card-body"><h5 class="card-title text-success fw-bold"><i class="fa-solid fa-ban"></i> PURGA ZERO-TRUST</h5><p class="card-text text-light small">"Confianza Cero". Asume la brecha, aísla y limpia equipos uno por uno.</p></div></div></div>
+            
+            <div class="row g-4 overflow-auto px-2 pb-4" style="max-height: 65vh;">
+                <div class="col-md-4">
+                    <div class="flip-card h-100">
+                        <div class="flip-card-inner">
+                            <div class="flip-card-front glass-panel border-neon-cyan p-3 rounded d-flex flex-column justify-content-center align-items-center">
+                                <i class="fa-solid fa-globe mb-3 text-cyan" style="font-size: 3rem;"></i>
+                                <h5 class="card-title text-cyan fw-bold">SOC SIMULATOR</h5>
+                                <span class="text-cyan mt-3 fw-bold border border-info rounded-pill px-3 py-1" style="font-size: 0.75rem;"><i class="fa-solid fa-eye"></i> VER EJEMPLO</span>
+                            </div>
+                            <div class="flip-card-back glass-panel border-neon-cyan p-3 rounded d-flex flex-column justify-content-center align-items-center" style="background: rgba(0, 255, 255, 0.15);">
+                                <div class="d-flex align-items-center gap-3 mb-3 fs-1">
+                                    <i class="fa-solid fa-desktop text-white"></i>
+                                    <i class="fa-solid fa-arrow-right-arrow-left fa-spin text-cyan fs-3"></i>
+                                    <i class="fa-solid fa-gamepad text-white"></i>
+                                </div>
+                                <h6 class="text-white fw-bold">ES COMO UN SIMULADOR DE VUELO</h6>
+                                <p class="text-light small mt-1 lh-sm">Entrenamos jugando sin arriesgar dinero real.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="flip-card h-100">
+                        <div class="flip-card-inner">
+                            <div class="flip-card-front glass-panel border-neon-red p-3 rounded d-flex flex-column justify-content-center align-items-center">
+                                <i class="fa-solid fa-user-ninja mb-3 text-danger" style="font-size: 3rem;"></i>
+                                <h5 class="card-title text-danger fw-bold">RED TEAM</h5>
+                                <span class="text-danger mt-3 fw-bold border border-danger rounded-pill px-3 py-1" style="font-size: 0.75rem;"><i class="fa-solid fa-eye"></i> VER EJEMPLO</span>
+                            </div>
+                            <div class="flip-card-back glass-panel border-neon-red p-3 rounded d-flex flex-column justify-content-center align-items-center" style="background: rgba(255, 0, 51, 0.15);">
+                                <div class="d-flex align-items-center gap-3 mb-3 fs-1">
+                                    <i class="fa-solid fa-user-secret fa-bounce text-danger"></i>
+                                    <i class="fa-solid fa-bolt text-warning fs-3"></i>
+                                    <i class="fa-solid fa-building-columns text-white"></i>
+                                </div>
+                                <h6 class="text-white fw-bold">LOS "LADRONES" DE PRUEBA</h6>
+                                <p class="text-light small mt-1 lh-sm">Hackers contratados para encontrar puntos débiles antes que los malos reales.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="flip-card h-100">
+                        <div class="flip-card-inner">
+                            <div class="flip-card-front glass-panel border-neon-green p-3 rounded d-flex flex-column justify-content-center align-items-center">
+                                <i class="fa-solid fa-user-shield mb-3 text-success" style="font-size: 3rem;"></i>
+                                <h5 class="card-title text-success fw-bold">BLUE TEAM</h5>
+                                <span class="text-success mt-3 fw-bold border border-success rounded-pill px-3 py-1" style="font-size: 0.75rem;"><i class="fa-solid fa-eye"></i> VER EJEMPLO</span>
+                            </div>
+                            <div class="flip-card-back glass-panel border-neon-green p-3 rounded d-flex flex-column justify-content-center align-items-center" style="background: rgba(0, 255, 0, 0.15);">
+                                <div class="d-flex align-items-center gap-3 mb-3 fs-1">
+                                    <i class="fa-solid fa-shield-halved fa-beat text-success"></i>
+                                    <i class="fa-solid fa-lock text-white"></i>
+                                </div>
+                                <h6 class="text-white fw-bold">LOS GUARDIAS DE ÉLITE</h6>
+                                <p class="text-light small mt-1 lh-sm">Vigilan las cámaras y activan alarmas para atrapar intrusos.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="flip-card h-100">
+                        <div class="flip-card-inner">
+                            <div class="flip-card-front glass-panel border-neon-red p-3 rounded d-flex flex-column justify-content-center align-items-center">
+                                <i class="fa-solid fa-microchip mb-3 text-danger" style="font-size: 3rem;"></i>
+                                <h5 class="card-title text-danger fw-bold">RAM SCRAPING</h5>
+                                <span class="text-danger mt-3 fw-bold border border-danger rounded-pill px-3 py-1" style="font-size: 0.75rem;"><i class="fa-solid fa-eye"></i> VER EJEMPLO</span>
+                            </div>
+                            <div class="flip-card-back glass-panel border-neon-red p-3 rounded d-flex flex-column justify-content-center align-items-center" style="background: rgba(255, 0, 51, 0.15);">
+                                <div class="d-flex align-items-center gap-2 mb-3 fs-1">
+                                    <i class="fa-solid fa-credit-card text-white"></i>
+                                    <i class="fa-solid fa-magnifying-glass fa-shake text-danger fs-3"></i>
+                                    <i class="fa-solid fa-copy text-white"></i>
+                                </div>
+                                <h6 class="text-white fw-bold">EL ESPÍA INVISIBLE</h6>
+                                <p class="text-light small mt-1 lh-sm">Clonan tu tarjeta justo en el milisegundo que la metes al cajero.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="flip-card h-100">
+                        <div class="flip-card-inner">
+                            <div class="flip-card-front glass-panel border-neon-green p-3 rounded d-flex flex-column justify-content-center align-items-center">
+                                <i class="fa-solid fa-fingerprint mb-3 text-success" style="font-size: 3rem;"></i>
+                                <h5 class="card-title text-success fw-bold">MFA BIOMÉTRICA</h5>
+                                <span class="text-success mt-3 fw-bold border border-success rounded-pill px-3 py-1" style="font-size: 0.75rem;"><i class="fa-solid fa-eye"></i> VER EJEMPLO</span>
+                            </div>
+                            <div class="flip-card-back glass-panel border-neon-green p-3 rounded d-flex flex-column justify-content-center align-items-center" style="background: rgba(0, 255, 0, 0.15);">
+                                <div class="d-flex align-items-center gap-3 mb-3 fs-1">
+                                    <i class="fa-solid fa-key text-white"></i>
+                                    <i class="fa-solid fa-plus text-success fs-4"></i>
+                                    <i class="fa-solid fa-face-viewfinder fa-pulse text-success"></i>
+                                </div>
+                                <h6 class="text-white fw-bold">LA CAJA FUERTE DOBLE</h6>
+                                <p class="text-light small mt-1 lh-sm">No basta con la contraseña, te exige escanear tu rostro o huella.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="flip-card h-100">
+                        <div class="flip-card-inner">
+                            <div class="flip-card-front glass-panel border-neon-red p-3 rounded d-flex flex-column justify-content-center align-items-center">
+                                <i class="fa-solid fa-robot mb-3 text-danger" style="font-size: 3rem;"></i>
+                                <h5 class="card-title text-danger fw-bold">BOTNET / CARDING</h5>
+                                <span class="text-danger mt-3 fw-bold border border-danger rounded-pill px-3 py-1" style="font-size: 0.75rem;"><i class="fa-solid fa-eye"></i> VER EJEMPLO</span>
+                            </div>
+                            <div class="flip-card-back glass-panel border-neon-red p-3 rounded d-flex flex-column justify-content-center align-items-center" style="background: rgba(255, 0, 51, 0.15);">
+                                <div class="d-flex align-items-center gap-2 mb-3 fs-2">
+                                    <i class="fa-solid fa-robot fa-shake text-danger"></i>
+                                    <i class="fa-solid fa-robot fa-shake text-danger" style="animation-delay: 0.2s;"></i>
+                                    <i class="fa-solid fa-robot fa-shake text-danger" style="animation-delay: 0.4s;"></i>
+                                </div>
+                                <h6 class="text-white fw-bold">EJÉRCITO ZOMBI</h6>
+                                <p class="text-light small mt-1 lh-sm">Miles de computadoras controladas a distancia atacando a la vez.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="flip-card h-100">
+                        <div class="flip-card-inner">
+                            <div class="flip-card-front glass-panel border-neon-green p-3 rounded d-flex flex-column justify-content-center align-items-center">
+                                <i class="fa-solid fa-brain mb-3 text-success" style="font-size: 3rem;"></i>
+                                <h5 class="card-title text-success fw-bold">MOTOR IA</h5>
+                                <span class="text-success mt-3 fw-bold border border-success rounded-pill px-3 py-1" style="font-size: 0.75rem;"><i class="fa-solid fa-eye"></i> VER EJEMPLO</span>
+                            </div>
+                            <div class="flip-card-back glass-panel border-neon-green p-3 rounded d-flex flex-column justify-content-center align-items-center" style="background: rgba(0, 255, 0, 0.15);">
+                                <div class="d-flex align-items-center gap-3 mb-3 fs-1">
+                                    <i class="fa-solid fa-shield-virus text-success"></i>
+                                    <i class="fa-solid fa-bolt fa-fade text-warning fs-3"></i>
+                                    <i class="fa-solid fa-bug-slash text-white"></i>
+                                </div>
+                                <h6 class="text-white fw-bold">EL PERRO GUARDIÁN</h6>
+                                <p class="text-light small mt-1 lh-sm">Aprende a reconocer a los intrusos y los bloquea en milisegundos.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="flip-card h-100">
+                        <div class="flip-card-inner">
+                            <div class="flip-card-front glass-panel border-neon-red p-3 rounded d-flex flex-column justify-content-center align-items-center">
+                                <i class="fa-solid fa-fish-fins mb-3 text-danger" style="font-size: 3rem;"></i>
+                                <h5 class="card-title text-danger fw-bold">PHISHING</h5>
+                                <span class="text-danger mt-3 fw-bold border border-danger rounded-pill px-3 py-1" style="font-size: 0.75rem;"><i class="fa-solid fa-eye"></i> VER EJEMPLO</span>
+                            </div>
+                            <div class="flip-card-back glass-panel border-neon-red p-3 rounded d-flex flex-column justify-content-center align-items-center" style="background: rgba(255, 0, 51, 0.15);">
+                                <div class="d-flex align-items-center gap-3 mb-3 fs-1">
+                                    <i class="fa-solid fa-envelope text-white"></i>
+                                    <i class="fa-solid fa-arrow-right text-danger fs-3"></i>
+                                    <i class="fa-solid fa-skull fa-beat-fade text-danger"></i>
+                                </div>
+                                <h6 class="text-white fw-bold">EL CARTERO FALSO</h6>
+                                <p class="text-light small mt-1 lh-sm">Correos engañosos que se hacen pasar por tu banco para robar claves.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="flip-card h-100">
+                        <div class="flip-card-inner">
+                            <div class="flip-card-front glass-panel border-neon-green p-3 rounded d-flex flex-column justify-content-center align-items-center">
+                                <i class="fa-solid fa-ban mb-3 text-success" style="font-size: 3rem;"></i>
+                                <h5 class="card-title text-success fw-bold">ZERO-TRUST</h5>
+                                <span class="text-success mt-3 fw-bold border border-success rounded-pill px-3 py-1" style="font-size: 0.75rem;"><i class="fa-solid fa-eye"></i> VER EJEMPLO</span>
+                            </div>
+                            <div class="flip-card-back glass-panel border-neon-green p-3 rounded d-flex flex-column justify-content-center align-items-center" style="background: rgba(0, 255, 0, 0.15);">
+                                <div class="d-flex align-items-center gap-3 mb-3 fs-1">
+                                    <i class="fa-solid fa-id-card fa-flip text-white"></i>
+                                    <i class="fa-solid fa-check-double text-success fs-3"></i>
+                                    <i class="fa-solid fa-house-lock text-success"></i>
+                                </div>
+                                <h6 class="text-white fw-bold">CONFIANZA CERO</h6>
+                                <p class="text-light small mt-1 lh-sm">Revisa el DNI de todos, incluso de los que ya están dentro de la casa.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
             </div>
-            <div class="text-center mt-5">
+            
+            <div class="text-center mt-4 z-10">
                 <button id="btnReiniciarSimulacion" class="cyber-btn btn-neon-cyan px-5 py-3"><i class="fa-solid fa-rotate-left"></i> Volver al Inicio</button>
             </div>
         </div>
@@ -200,6 +383,7 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/tsparticles-slim@2.0.6/tsparticles.slim.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/intro.js/7.2.0/intro.min.js"></script>
     <script src="app.js"></script>
 </body>
 </html>

@@ -21,7 +21,6 @@ body {
     z-index: 0; pointer-events: none; transition: opacity 0.5s ease-in-out;
 }
 
-/* --- FONDO "VS" (Rojo a la Izquierda, Azul a la Derecha) --- */
 .blade-runner-bg { 
     background: radial-gradient(ellipse at center, rgba(0,0,0,0.5) 0%, rgba(0,0,0,1) 70%),
                 linear-gradient(90deg, rgba(50,0,10,0.4) 0%, rgba(0,0,0,1) 50%, rgba(0,20,50,0.4) 100%);
@@ -78,32 +77,23 @@ body {
 }
 .pulse-active { animation: click-pulse 0.2s ease-out; }
 
-/* --- MATRIZ DE WARNINGS (VS: ROJO Y AZUL) --- */
+/* --- MATRIZ DE WARNINGS (GSAP + EXPLOSIÓN CENTRAL) --- */
 .warning-matrix-container { position: absolute; width: 100vw; height: 100vh; top: 0; left: 0; z-index: 1; pointer-events: none; overflow: hidden; }
-.matrix-icon { position: absolute; opacity: 0.7; }
+.matrix-icon { position: absolute; opacity: 0; transform: scale(0); will-change: transform, opacity; } 
 
-/* Nuevas clases para los colores de equipo */
 .matrix-red { color: #ff0033; text-shadow: 0 0 10px #ff0033, 0 0 20px #ff0033, 0 0 30px #ff0033; }
 .matrix-blue { color: #0077ff; text-shadow: 0 0 10px #0077ff, 0 0 20px #0077ff, 0 0 30px #0077ff; }
 
-@keyframes float-matrix { 0% { transform: translateY(0px) scale(1); filter: brightness(1); } 100% { transform: translateY(-20px) scale(1.1); filter: brightness(1.5); } }
+.clash-flash {
+    position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+    width: 150px; height: 150px;
+    background: radial-gradient(circle, rgba(255,255,255,1) 0%, rgba(255,0,255,0.6) 30%, rgba(0,255,255,0) 70%);
+    border-radius: 50%; opacity: 0; pointer-events: none; z-index: 2; mix-blend-mode: screen;
+}
 
 /* --- TERMINALES Y TYPEWRITER EFFECT --- */
-.cyber-terminal { 
-    background-color: rgba(0, 0, 0, 0.8); 
-    border: 1px solid #333; 
-    box-shadow: inset 0 0 15px rgba(0, 0, 0, 1); 
-    display: flex; 
-    flex-direction: column-reverse; 
-}
-.typewriter-line { 
-    flex-shrink: 0; 
-    overflow: hidden; 
-    white-space: nowrap; 
-    width: 0; 
-    animation: typing 0.3s steps(40, end) forwards; 
-    margin-bottom: 2px; 
-}
+.cyber-terminal { background-color: rgba(0, 0, 0, 0.8); border: 1px solid #333; box-shadow: inset 0 0 15px rgba(0, 0, 0, 1); display: flex; flex-direction: column-reverse; }
+.typewriter-line { flex-shrink: 0; overflow: hidden; white-space: nowrap; width: 0; animation: typing 0.3s steps(40, end) forwards; margin-bottom: 2px; }
 @keyframes typing { from { width: 0; } to { width: 100%; } }
 
 /* --- MAPAS DE NODOS --- */
@@ -122,7 +112,6 @@ body {
 .scan-red { border-color: #ff0033 !important; box-shadow: 0 0 20px rgba(255,0,51,0.2) inset !important; }
 .scan-red .scan-circle-1, .scan-red .scan-circle-2 { border-color: rgba(255,0,51,0.5) !important; }
 .scan-red .laser-scan { background-color: #ff0033 !important; box-shadow: 0 0 15px #ff0033 !important; }
-
 .overlay-scan { position: absolute; top: 0; left: 0; width: 100%; height: 8px; background-color: #00ff00; box-shadow: 0 0 20px #00ff00; opacity: 0.9; z-index: 5; }
 .laser-scan { position: absolute; top: 0; left: 0; width: 100%; height: 4px; background-color: #00ff00; box-shadow: 0 0 15px #00ff00; animation: scan-vertical 1.5s infinite linear alternate; will-change: transform; transition: all 0.3s ease; }
 @keyframes scan-vertical { 0% { transform: translateY(0); } 100% { transform: translateY(150px); } }
@@ -130,3 +119,41 @@ body {
 .pantalla-modulo { min-height: 100vh; box-sizing: border-box; }
 .max-width-text { max-width: 850px; }
 .wiener-line { height: 2px; background: linear-gradient(90deg, transparent, #00ffff, #ffcc00, transparent); }
+
+/* =========================================================
+   TARJETAS GIRATORIAS 3D (GLOSARIO)
+   ========================================================= */
+.flip-card { background-color: transparent; perspective: 1000px; cursor: pointer; min-height: 240px; }
+.flip-card-inner { position: relative; width: 100%; height: 100%; text-align: center; transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275); transform-style: preserve-3d; }
+.flip-card:hover .flip-card-inner, .flip-card:focus .flip-card-inner, .flip-card:active .flip-card-inner { transform: rotateY(180deg); }
+.flip-card-front, .flip-card-back { position: absolute; width: 100%; height: 100%; -webkit-backface-visibility: hidden; backface-visibility: hidden; }
+.flip-card-back { transform: rotateY(180deg); }
+
+/* =========================================================
+   ESTILOS CYBERPUNK PARA INTRO.JS (TUTORIAL GUIADO)
+   ========================================================= */
+.introjs-tooltip {
+    background-color: rgba(10, 5, 10, 0.95) !important;
+    border: 1px solid #00ffff !important;
+    box-shadow: 0 0 20px rgba(0, 255, 255, 0.3) !important;
+    color: #e0e0e0 !important;
+    font-family: 'Share Tech Mono', monospace !important;
+    border-radius: 8px !important;
+}
+.introjs-arrow.top { border-bottom-color: #00ffff !important; }
+.introjs-arrow.bottom { border-top-color: #00ffff !important; }
+.introjs-arrow.left { border-right-color: #00ffff !important; }
+.introjs-arrow.right { border-left-color: #00ffff !important; }
+.introjs-tooltipbuttons { border-top: 1px solid #333 !important; }
+.introjs-button {
+    background-color: transparent !important;
+    border: 1px solid #00ffff !important;
+    color: #00ffff !important;
+    text-shadow: 0 0 5px #00ffff !important;
+    font-family: 'Orbitron', sans-serif !important;
+    text-transform: uppercase !important;
+    border-radius: 4px !important;
+}
+.introjs-button:hover { background-color: #00ffff !important; color: #000 !important; }
+.introjs-bullets ul li a { background: #333 !important; }
+.introjs-bullets ul li a.active { background: #00ffff !important; box-shadow: 0 0 10px #00ffff !important; }
