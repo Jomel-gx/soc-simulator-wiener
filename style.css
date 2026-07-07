@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Orbitron:wght@400;700;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Orbitron:wght@400;700;900&family=Inter:wght@400;600;700&display=swap');
 
 body {
     background-color: #050202; 
@@ -6,60 +6,76 @@ body {
     font-family: 'Share Tech Mono', monospace;
     margin: 0;
     overflow-x: hidden;
+    transition: background-color 0.3s ease;
 }
 
-/* --- EFECTO MONITOR & FONDO NEURONAL --- */
+/* --- EFECTO MONITOR --- */
 .scanlines {
     position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
     background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
     background-size: 100% 4px, 3px 100%;
     z-index: 9999; pointer-events: none; 
 }
-
-#tsparticles {
-    position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
-    z-index: 0; pointer-events: none; transition: opacity 0.5s ease-in-out;
-}
-
-.blade-runner-bg { 
-    background: radial-gradient(ellipse at center, rgba(0,0,0,0.5) 0%, rgba(0,0,0,1) 70%),
-                linear-gradient(90deg, rgba(50,0,10,0.4) 0%, rgba(0,0,0,1) 50%, rgba(0,20,50,0.4) 100%);
-    background-color: #050202;
-}
+#tsparticles { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 0; pointer-events: none; }
+.blade-runner-bg { background: radial-gradient(ellipse at center, rgba(0,0,0,0.5) 0%, rgba(0,0,0,1) 70%), linear-gradient(90deg, rgba(50,0,10,0.4) 0%, rgba(0,0,0,1) 50%, rgba(0,20,50,0.4) 100%); background-color: #050202; }
 .z-10 { z-index: 10; position: relative; }
 
-/* --- GLASSMORPHISM --- */
-.glass-panel { background: rgba(10, 5, 10, 0.8); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.9); }
-.custom-card { transition: transform 0.3s ease, box-shadow 0.3s ease; }
-.custom-card:hover { transform: translateY(-5px); }
+/* =========================================================
+   LOGIN TERMINAL (OPACA, PROFESIONAL, SIN NEÓN)
+   ========================================================= */
+#pantalla-login-cyber { background-color: #0d1117; min-height: 100vh; } 
+.terminal-login-container { width: 100%; max-width: 450px; background-color: #161b22; border: 1px solid #30363d; border-radius: 8px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); overflow: hidden; }
+.terminal-header { background-color: #21262d; border-bottom: 1px solid #30363d; }
+.terminal-dot { width: 12px; height: 12px; border-radius: 50%; opacity: 0.5; }
+.matte-text-green { color: #3fb950; }
+.matte-text-blue { color: #58a6ff; }
+.matte-text-gray { color: #8b949e; }
+.terminal-input { background-color: #0d1117 !important; border: 1px solid #30363d !important; color: #c9d1d9 !important; font-family: 'Share Tech Mono', monospace; padding: 10px 15px; }
+.terminal-input:focus { border-color: #58a6ff !important; box-shadow: none !important; }
+.terminal-btn { background-color: #21262d; border: 1px solid #30363d; color: #c9d1d9; transition: all 0.2s ease; }
+.terminal-btn:hover { background-color: #30363d; color: #fff; }
+.terminal-btn.btn-granted { background-color: #238636 !important; border-color: #2ea043 !important; color: white !important; }
 
-/* --- LOGO TRANSPARENTE --- */
-.wiener-logo-img {
-    width: 160px; height: auto; object-fit: contain;
-    filter: drop-shadow(0 0 10px #00ffff) drop-shadow(0 0 20px #ff0033);
-    animation: float-logo 3s ease-in-out infinite alternate;
+/* =========================================================
+   BOTÓN Y MODO ACCESIBILIDAD (DISLEXIA Y LECTURA FÁCIL)
+   ========================================================= */
+.btn-accesibilidad {
+    background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.3); color: white; padding: 8px 15px;
+    border-radius: 20px; font-family: 'Inter', sans-serif; font-weight: 600; font-size: 0.85rem; cursor: pointer; transition: all 0.3s;
 }
-@keyframes float-logo {
-    0% { transform: translateY(0px); filter: drop-shadow(0 0 10px #00ffff) drop-shadow(0 0 20px #ff0033); }
-    100% { transform: translateY(-10px); filter: drop-shadow(0 0 20px #00ffff) drop-shadow(0 0 35px #ff0033); }
-}
+.btn-accesibilidad:hover { background: white; color: black; }
 
-/* --- NEÓN Y RESPLANDORES --- */
+/* REGLAS GLOBALES CUANDO EL MODO ESTÁ ACTIVO */
+body.modo-lectura { background: #1e1e1e !important; }
+body.modo-lectura .scanlines, body.modo-lectura .warning-matrix-container, body.modo-lectura #tsparticles { display: none !important; }
+body.modo-lectura .glass-panel { background: #2d2d2d !important; backdrop-filter: none !important; border: 1px solid #444 !important; box-shadow: 0 4px 6px rgba(0,0,0,0.3) !important; }
+body.modo-lectura * { text-shadow: none !important; box-shadow: none !important; font-family: 'Inter', 'Segoe UI', Arial, sans-serif !important; letter-spacing: normal !important; }
+body.modo-lectura .text-cyan, body.modo-lectura .neon-dark-blue, body.modo-lectura .btn-neon-cyan { color: #5bc0de !important; border-color: #5bc0de !important; }
+body.modo-lectura .text-danger, body.modo-lectura .neon-dark-red, body.modo-lectura .btn-neon-red { color: #d9534f !important; border-color: #d9534f !important; }
+body.modo-lectura .text-success, body.modo-lectura .btn-neon-green { color: #5cb85c !important; border-color: #5cb85c !important; }
+body.modo-lectura .text-white { color: #f8f9fa !important; }
+body.modo-lectura .cyber-btn { background: #333 !important; border-width: 1px !important; border-radius: 6px !important; }
+body.modo-lectura .cyber-btn:hover { background: #444 !important; }
+body.modo-lectura .wiener-logo-img { filter: none !important; animation: none !important; } 
+
+/* =========================================================
+   ESTILOS NEÓN Y CYBERPUNK (MÓDULOS)
+   ========================================================= */
+.glass-panel { background: rgba(10, 5, 10, 0.8); backdrop-filter: blur(8px); box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.9); }
+.wiener-logo-img { width: 160px; height: auto; object-fit: contain; filter: drop-shadow(0 0 10px #00ffff) drop-shadow(0 0 20px #ff0033); animation: float-logo 3s ease-in-out infinite alternate; }
+@keyframes float-logo { 0% { transform: translateY(0px); } 100% { transform: translateY(-10px); filter: drop-shadow(0 0 20px #00ffff) drop-shadow(0 0 35px #ff0033); } }
 .text-cyan { color: #00ffff !important; }
 .glow-text-cyan { text-shadow: 0 0 5px #00ffff, 0 0 15px #00ffff; }
 .glow-text-red { text-shadow: 0 0 10px #ff0033, 0 0 20px #ff0033, 0 0 30px #ff0033; }
 .neon-dark-red { color: #e6002b; text-shadow: 0 0 5px #990000, 0 0 15px #990000, 0 0 25px #ff0033; }
 .neon-dark-blue { color: #0077ff; text-shadow: 0 0 5px #000099, 0 0 15px #000099, 0 0 25px #0033ff; }
-
 .border-neon-cyan { border: 1px solid #00ffff !important; box-shadow: 0 0 10px rgba(0,255,255,0.2), inset 0 0 10px rgba(0,255,255,0.1); }
 .border-neon-red { border: 2px solid #ff0033 !important; box-shadow: 0 0 20px rgba(255,0,51,0.5), inset 0 0 20px rgba(255,0,51,0.2); }
 .border-neon-green { border: 1px solid #00ff00 !important; box-shadow: 0 0 10px rgba(0,255,0,0.2), inset 0 0 10px rgba(0,255,0,0.1); }
-
 .shadow-neon-red { box-shadow: 0 0 25px rgba(255,0,51,0.6); }
 .shadow-neon-green { box-shadow: 0 0 10px rgba(0,255,0,0.5); }
 .shadow-neon-cyan { box-shadow: 0 0 10px rgba(0,255,255,0.5); }
 
-/* --- BOTONES CYBER-GLITCH --- */
 .cyber-btn { background: transparent; font-family: 'Orbitron', sans-serif; font-weight: 900; letter-spacing: 2px; text-transform: uppercase; transition: all 0.2s; cursor: pointer; position: relative; overflow: hidden; }
 .cyber-btn:disabled { opacity: 0.4; cursor: not-allowed; filter: grayscale(100%); }
 .btn-neon-cyan { color: #00ffff; border: 2px solid #00ffff; text-shadow: 0 0 5px #00ffff; }
@@ -70,45 +86,29 @@ body {
 .btn-neon-green:hover:not(:disabled) { background: #00ff00; color: #000; box-shadow: 0 0 30px #00ff00; }
 .cyber-btn:active:not(:disabled) { transform: translate(2px, 2px); }
 
-@keyframes click-pulse {
-    0% { transform: scale(1); box-shadow: 0 0 25px rgba(255,0,51,0.6); }
-    50% { transform: scale(1.03); box-shadow: 0 0 50px rgba(255,0,51,1); }
-    100% { transform: scale(1); box-shadow: 0 0 25px rgba(255,0,51,0.6); }
-}
 .pulse-active { animation: click-pulse 0.2s ease-out; }
+@keyframes click-pulse { 0% { transform: scale(1); box-shadow: 0 0 25px rgba(255,0,51,0.6); } 50% { transform: scale(1.03); box-shadow: 0 0 50px rgba(255,0,51,1); } 100% { transform: scale(1); box-shadow: 0 0 25px rgba(255,0,51,0.6); } }
 
-/* --- MATRIZ DE WARNINGS (GSAP + EXPLOSIÓN CENTRAL) --- */
 .warning-matrix-container { position: absolute; width: 100vw; height: 100vh; top: 0; left: 0; z-index: 1; pointer-events: none; overflow: hidden; }
 .matrix-icon { position: absolute; opacity: 0; transform: scale(0); will-change: transform, opacity; } 
-
 .matrix-red { color: #ff0033; text-shadow: 0 0 10px #ff0033, 0 0 20px #ff0033, 0 0 30px #ff0033; }
 .matrix-blue { color: #0077ff; text-shadow: 0 0 10px #0077ff, 0 0 20px #0077ff, 0 0 30px #0077ff; }
+.clash-flash { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 150px; height: 150px; background: radial-gradient(circle, rgba(255,255,255,1) 0%, rgba(255,0,255,0.6) 30%, rgba(0,255,255,0) 70%); border-radius: 50%; opacity: 0; z-index: 2; mix-blend-mode: screen; }
 
-.clash-flash {
-    position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
-    width: 150px; height: 150px;
-    background: radial-gradient(circle, rgba(255,255,255,1) 0%, rgba(255,0,255,0.6) 30%, rgba(0,255,255,0) 70%);
-    border-radius: 50%; opacity: 0; pointer-events: none; z-index: 2; mix-blend-mode: screen;
-}
-
-/* --- TERMINALES Y TYPEWRITER EFFECT --- */
 .cyber-terminal { background-color: rgba(0, 0, 0, 0.8); border: 1px solid #333; box-shadow: inset 0 0 15px rgba(0, 0, 0, 1); display: flex; flex-direction: column-reverse; }
 .typewriter-line { flex-shrink: 0; overflow: hidden; white-space: nowrap; width: 0; animation: typing 0.3s steps(40, end) forwards; margin-bottom: 2px; }
 @keyframes typing { from { width: 0; } to { width: 100%; } }
 
-/* --- MAPAS DE NODOS --- */
 .node-map { background: rgba(0, 40, 50, 0.2); position: relative; overflow: hidden; }
 .cyber-node { position: absolute; display: flex; justify-content: center; align-items: center; font-size: 16px; transition: all 0.3s; }
 .node-red { color: #ff0033; text-shadow: 0 0 10px #ff0033; }
 .node-green { color: #00ff00; text-shadow: 0 0 10px #00ff00; }
-
 @keyframes pulse-red-icon { 0% { filter: drop-shadow(0 0 2px #ff0033); transform: scale(1); } 50% { filter: drop-shadow(0 0 10px #ff0033); transform: scale(1.2); } 100% { filter: drop-shadow(0 0 2px #ff0033); transform: scale(1); } }
 @keyframes pulse-green-icon { 0% { filter: drop-shadow(0 0 2px #00ff00); transform: scale(1); } 50% { filter: drop-shadow(0 0 10px #00ff00); transform: scale(1.2); } 100% { filter: drop-shadow(0 0 2px #00ff00); transform: scale(1); } }
 .node-infected { color: #ff0033; animation: pulse-red-icon 1s infinite; }
 .node-purged { color: #00ff00; animation: pulse-green-icon 1.5s infinite; }
 .lockdown-zone { background: repeating-linear-gradient(45deg, rgba(42,0,0,0.5), rgba(42,0,0,0.5) 10px, transparent 10px, transparent 20px) !important; border: 2px solid #ff0033 !important; }
 
-/* OPTIMIZACIÓN ESCÁNER M1 */
 .scan-red { border-color: #ff0033 !important; box-shadow: 0 0 20px rgba(255,0,51,0.2) inset !important; }
 .scan-red .scan-circle-1, .scan-red .scan-circle-2 { border-color: rgba(255,0,51,0.5) !important; }
 .scan-red .laser-scan { background-color: #ff0033 !important; box-shadow: 0 0 15px #ff0033 !important; }
@@ -117,7 +117,7 @@ body {
 @keyframes scan-vertical { 0% { transform: translateY(0); } 100% { transform: translateY(150px); } }
 
 .pantalla-modulo { min-height: 100vh; box-sizing: border-box; }
-.max-width-text { max-width: 850px; }
+.max-width-text { max-width: 1000px; }
 .wiener-line { height: 2px; background: linear-gradient(90deg, transparent, #00ffff, #ffcc00, transparent); }
 
 /* =========================================================
@@ -130,30 +130,15 @@ body {
 .flip-card-back { transform: rotateY(180deg); }
 
 /* =========================================================
-   ESTILOS CYBERPUNK PARA INTRO.JS (TUTORIAL GUIADO)
+   INTRO.JS
    ========================================================= */
-.introjs-tooltip {
-    background-color: rgba(10, 5, 10, 0.95) !important;
-    border: 1px solid #00ffff !important;
-    box-shadow: 0 0 20px rgba(0, 255, 255, 0.3) !important;
-    color: #e0e0e0 !important;
-    font-family: 'Share Tech Mono', monospace !important;
-    border-radius: 8px !important;
-}
+.introjs-tooltip { background-color: rgba(10, 5, 10, 0.95) !important; border: 1px solid #00ffff !important; box-shadow: 0 0 20px rgba(0, 255, 255, 0.3) !important; color: #e0e0e0 !important; font-family: 'Share Tech Mono', monospace !important; border-radius: 8px !important; }
 .introjs-arrow.top { border-bottom-color: #00ffff !important; }
 .introjs-arrow.bottom { border-top-color: #00ffff !important; }
 .introjs-arrow.left { border-right-color: #00ffff !important; }
 .introjs-arrow.right { border-left-color: #00ffff !important; }
 .introjs-tooltipbuttons { border-top: 1px solid #333 !important; }
-.introjs-button {
-    background-color: transparent !important;
-    border: 1px solid #00ffff !important;
-    color: #00ffff !important;
-    text-shadow: 0 0 5px #00ffff !important;
-    font-family: 'Orbitron', sans-serif !important;
-    text-transform: uppercase !important;
-    border-radius: 4px !important;
-}
+.introjs-button { background-color: transparent !important; border: 1px solid #00ffff !important; color: #00ffff !important; text-shadow: 0 0 5px #00ffff !important; font-family: 'Orbitron', sans-serif !important; text-transform: uppercase !important; border-radius: 4px !important; }
 .introjs-button:hover { background-color: #00ffff !important; color: #000 !important; }
 .introjs-bullets ul li a { background: #333 !important; }
 .introjs-bullets ul li a.active { background: #00ffff !important; box-shadow: 0 0 10px #00ffff !important; }

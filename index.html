@@ -6,20 +6,56 @@
     <title>Dashboard Ciberseguridad ATM - BCP / Wiener</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Orbitron:wght@400;700;900&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intro.js/7.2.0/introjs.min.css">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="scanlines"></div>
-
     <div id="tsparticles" class="d-none"></div>
 
-    <section id="pantalla-bienvenida" class="pantalla-modulo blade-runner-bg d-flex align-items-center justify-content-center position-relative">
+    <section id="pantalla-login-cyber" class="pantalla-modulo d-flex align-items-center justify-content-center position-relative">
+        <div class="terminal-login-container">
+            <div class="terminal-header d-flex justify-content-between align-items-center px-3 py-2">
+                <span class="text-muted small font-monospace">root@soc-wiener:~</span>
+                <div class="d-flex gap-2">
+                    <div class="terminal-dot bg-secondary"></div>
+                    <div class="terminal-dot bg-secondary"></div>
+                    <div class="terminal-dot bg-secondary"></div>
+                </div>
+            </div>
+            <div class="terminal-body p-4">
+                <div class="typing-container mb-4">
+                    <p class="matte-text-green font-monospace mb-1">> Estableciendo conexión segura...</p>
+                    <p class="matte-text-green font-monospace mb-1">> Servidor Wiener SOC 2.0.4 detectado.</p>
+                    <p class="matte-text-blue font-monospace">> Ingrese credenciales de agente para continuar.</p>
+                </div>
+                
+                <div class="mb-3">
+                    <label class="form-label matte-text-gray font-monospace small">USUARIO (ID)</label>
+                    <input type="text" id="loginUser" class="form-control terminal-input" placeholder="admin_wiener" autocomplete="off">
+                </div>
+                <div class="mb-4">
+                    <label class="form-label matte-text-gray font-monospace small">CLAVE SECRETA</label>
+                    <input type="password" id="loginPass" class="form-control terminal-input" placeholder="••••••••">
+                </div>
+                
+                <button id="btnAccederTerminal" class="btn terminal-btn w-100 font-monospace py-2">
+                    <i class="fa-solid fa-terminal me-2"></i> INICIAR SECUENCIA
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <section id="pantalla-bienvenida" class="pantalla-modulo d-none blade-runner-bg d-flex align-items-center justify-content-center position-relative">
         
+        <button id="btnModoAccesible" class="btn-accesibilidad position-absolute top-0 end-0 m-4 z-10" title="Activar Modo Lectura (Dislexia)">
+            <i class="fa-solid fa-eye-low-vision me-2"></i> MODO LECTURA
+        </button>
+
         <div id="warning-matrix" class="warning-matrix-container"></div>
         
-        <div class="container text-center py-5 z-10">
+        <div class="container text-center py-5 z-10 dashboard-content">
             <div class="d-flex justify-content-center align-items-center mb-4">
                 <img src="logo.png" alt="Universidad Norbert Wiener" class="wiener-logo-img">
             </div>
@@ -27,41 +63,41 @@
             <div class="mb-4">
                 <span class="wiener-cyber-text text-white" style="font-family: 'Orbitron', sans-serif; letter-spacing: 4px;">Universidad Norbert Wiener</span>
                 <div class="wiener-line my-3 mx-auto" style="width: 50%;"></div>
-                <p class="text-danger small font-monospace mt-1 glow-text-red fw-bold" style="letter-spacing: 2px;">FACULTAD DE INGENIERÍA Y NEGOCIOS</p>
+                <p class="text-danger small font-monospace mt-1 glow-text-red fw-bold text-facultad" style="letter-spacing: 2px;">FACULTAD DE INGENIERÍA Y NEGOCIOS</p>
             </div>
             
-            <h1 class="display-3 text-white fw-bold mb-2" style="font-family: 'Orbitron', sans-serif; text-shadow: 0 0 15px #00ffff, 0 0 30px #00ffff;" data-intro="¡Bienvenido al SOC Simulator! Aquí aprenderás cómo el Red Team (Hackers) ataca y cómo el Blue Team (Defensas) protege los sistemas del banco." data-step="1">SOC SIMULATOR</h1>
-            <h2 class="h5 mb-5" style="font-family: 'Orbitron', sans-serif; letter-spacing: 3px;">
+            <h1 class="display-3 text-white fw-bold mb-2 title-soc" style="font-family: 'Orbitron', sans-serif; text-shadow: 0 0 15px #00ffff, 0 0 30px #00ffff;" data-intro="¡Bienvenido al SOC Simulator! Aquí aprenderás cómo atacan los Hackers y cómo protege el Blue Team." data-step="1">SOC SIMULATOR</h1>
+            <h2 class="h5 mb-5 subtitle-soc" style="font-family: 'Orbitron', sans-serif; letter-spacing: 3px;">
                 <span class="neon-dark-red">RED TEAM</span> <span class="text-white opacity-50 mx-2">VS</span> <span class="neon-dark-blue">BLUE TEAM</span>
             </h2>
             
-            <div class="mx-auto px-5 py-3 mb-5 border-neon-red shadow-neon-red pulse-container glass-panel d-inline-block" style="border-radius: 8px;" data-intro="Este contador global en vivo registrará cada interacción tuya con el simulador, demostrando el volumen masivo de ataques cibernéticos diarios." data-step="2">
-                <div class="text-danger glow-text-red fs-6 mb-2 font-monospace" style="letter-spacing: 3px;">
+            <div class="mx-auto px-5 py-3 mb-5 border-neon-red shadow-neon-red pulse-container glass-panel d-inline-block counter-box" style="border-radius: 8px;" data-intro="Contador global en vivo de interacciones." data-step="2">
+                <div class="text-danger glow-text-red fs-6 mb-2 font-monospace label-contador" style="letter-spacing: 3px;">
                     <i class="fa-solid fa-satellite-dish fa-spin me-2"></i> INTERACCIONES GLOBALES
                 </div>
-                <div id="click-counter-display" class="text-danger fw-bold glow-text-red" style="font-family: 'Orbitron', sans-serif; font-size: 4.5rem; letter-spacing: 8px; line-height: 1;">000000</div>
+                <div id="click-counter-display" class="text-danger fw-bold glow-text-red num-contador" style="font-family: 'Orbitron', sans-serif; font-size: 4.5rem; letter-spacing: 8px; line-height: 1;">000000</div>
             </div>
             
             <div>
-                <button id="btnIniciar" class="cyber-btn btn-neon-red btn-lg font-monospace px-5 py-3 mt-2 fs-5" data-intro="Haz clic aquí para iniciar el entrenamiento interactivo módulo por módulo. ¡Prepárate para defender la red!" data-step="3">
-                    <i class="fa-solid fa-power-off me-2"></i> INICIAR SIMULACIÓN
+                <button id="btnIniciar" class="cyber-btn btn-neon-red btn-lg font-monospace px-5 py-3 mt-2 fs-5" data-intro="Haz clic aquí para iniciar el entrenamiento." data-step="3">
+                    <i class="fa-solid fa-play me-2"></i> IR A LOS MÓDULOS
                 </button>
             </div>
         </div>
     </section>
 
     <section id="pantalla-modulo1" class="pantalla-modulo d-none py-5 position-relative">
-        <div class="container h-100 d-flex flex-column justify-content-between z-10">
-            <div class="text-center mb-4 glass-panel p-3 rounded border-neon-cyan">
-                <h2 class="text-cyan font-monospace fw-bold mb-2">MÓDULO 1: EXTRACCIÓN FÍSICA VS DEFENSA BIOMÉTRICA</h2>
-                <p class="text-light mt-2 mx-auto max-width-text" style="font-size: 0.95rem;">
-                    <strong class="text-warning">¿Qué pasa aquí?</strong> Un intruso intenta clonar y leer de forma física la memoria interna del cajero (RAM Scraping). La defensa responde bloqueando el sistema mediante reconocimiento biométrico y un doble factor de autenticación (MFA).
+        <div class="container h-100 d-flex flex-column justify-content-between z-10 dashboard-content">
+            <div class="text-center mb-4 glass-panel p-4 rounded border-neon-cyan shadow-neon-cyan header-modulo">
+                <h2 class="text-cyan font-monospace fw-bold mb-3 display-6 modulo-title">MÓDULO 1: EXTRACCIÓN FÍSICA VS DEFENSA BIOMÉTRICA</h2>
+                <p class="text-white mt-3 mx-auto max-width-text fw-bold lh-base modulo-desc" style="font-size: 1.25rem; text-shadow: 0 2px 5px rgba(0,0,0,0.9);">
+                    <strong class="text-warning fs-4 highlight-text">¿Qué pasa aquí?</strong><br> Un intruso intenta clonar y leer de forma física la memoria interna del cajero (RAM Scraping). La defensa responde bloqueando el sistema mediante reconocimiento biométrico y un doble factor de autenticación (MFA).
                 </p>
             </div>
             <div class="row my-auto justify-content-center">
                 <div class="col-md-5 mb-4 mb-md-0">
-                    <div class="card custom-card glass-panel border-neon-red h-100" data-intro="Aquí juegas el rol del ATACANTE (Red Team). Primero, presiona el botón rojo para inyectar el código malicioso y tratar de robar la información del cajero." data-step="4">
-                        <div class="card-header bg-transparent border-bottom border-danger text-danger fw-bold fs-5 text-center"><i class="fa-solid fa-skull-crossbones"></i> Ataque: RAM Scraping</div>
+                    <div class="card custom-card glass-panel border-neon-red h-100" data-intro="Rol del ATACANTE: Inyecta código malicioso." data-step="4">
+                        <div class="card-header bg-transparent border-bottom border-danger text-danger fw-bold fs-5 text-center atk-title"><i class="fa-solid fa-skull-crossbones"></i> Ataque: RAM Scraping</div>
                         <div class="card-body text-center d-flex flex-column justify-content-center p-4">
                             <button id="btnAtaque1" class="cyber-btn btn-neon-red btn-lg w-100 mb-4">EJECUTAR INYECCIÓN</button>
                             <div id="hexDump" class="cyber-terminal p-3 d-none text-start" style="height: 180px; overflow-y: hidden; font-size: 0.85rem; color: #0f0;"></div>
@@ -69,13 +105,13 @@
                     </div>
                 </div>
                 <div class="col-md-5">
-                    <div class="card custom-card glass-panel border-neon-green h-100" data-intro="Una vez que el ataque inicie y suene la alerta, juega el rol del DEFENSOR (Blue Team). Presiona el botón verde para activar el escáner biométrico y expulsar al atacante." data-step="5">
-                        <div class="card-header bg-transparent border-bottom border-success text-success fw-bold fs-5 text-center"><i class="fa-solid fa-fingerprint"></i> Defensa: Biométrica MFA</div>
+                    <div class="card custom-card glass-panel border-neon-green h-100" data-intro="Rol del DEFENSOR: Activa escáner biométrico." data-step="5">
+                        <div class="card-header bg-transparent border-bottom border-success text-success fw-bold fs-5 text-center def-title"><i class="fa-solid fa-fingerprint"></i> Defensa: Biométrica MFA</div>
                         <div class="card-body text-center position-relative d-flex flex-column justify-content-center align-items-center p-4">
                             <button id="btnDefensa1" class="cyber-btn btn-neon-green btn-lg w-100 mb-4" disabled>FORZAR AUTENTICACIÓN</button>
-                            <div id="estadoDefensa" class="text-secondary fw-bold fs-5 mt-2 font-monospace">SISTEMA EN ESPERA</div>
+                            <div id="estadoDefensa" class="text-secondary fw-bold fs-5 mt-2 font-monospace label-estado">SISTEMA EN ESPERA</div>
                             
-                            <div id="animacionScan" class="d-none mt-4 mx-auto" style="width: 150px; height: 150px; border: 2px solid #00ff00; border-radius: 15px; position: relative; overflow: hidden; box-shadow: 0 0 20px rgba(0,255,0,0.2) inset; transition: all 0.3s ease;">
+                            <div id="animacionScan" class="d-none mt-4 mx-auto ui-scan" style="width: 150px; height: 150px; border: 2px solid #00ff00; border-radius: 15px; position: relative; overflow: hidden; box-shadow: 0 0 20px rgba(0,255,0,0.2) inset; transition: all 0.3s ease;">
                                 <div class="scan-circle-1" style="position: absolute; top: 15%; left: 25%; width: 50%; height: 40%; border: 2px dashed rgba(0, 255, 0, 0.5); border-radius: 50%;"></div>
                                 <div class="scan-circle-2" style="position: absolute; top: 60%; left: 15%; width: 70%; height: 50%; border: 2px dashed rgba(0, 255, 0, 0.5); border-radius: 50% 50% 0 0;"></div>
                                 <div class="laser-scan"></div>
@@ -84,26 +120,27 @@
                     </div>
                 </div>
             </div>
-            <div class="text-end mt-4">
-                <button id="btnIrModulo2" class="cyber-btn btn-neon-cyan px-4 py-2">Siguiente Módulo &gt;</button>
+            <div class="d-flex flex-column flex-md-row justify-content-between gap-3 mt-4 w-100">
+                <button id="btnVolverP0" class="cyber-btn btn-neon-red px-4 py-2"><i class="fa-solid fa-arrow-left"></i> Volver al Inicio</button>
+                <button id="btnIrModulo2" class="cyber-btn btn-neon-cyan px-4 py-2">Siguiente Módulo <i class="fa-solid fa-arrow-right"></i></button>
             </div>
         </div>
     </section>
 
     <section id="pantalla-modulo2" class="pantalla-modulo d-none py-5 position-relative">
-        <div class="container h-100 d-flex flex-column justify-content-between z-10">
-            <div class="text-center mb-4 glass-panel p-3 rounded border-neon-cyan">
-                <h2 class="text-cyan font-monospace fw-bold mb-2">MÓDULO 2: BOTNET CARDING VS MOTOR IA</h2>
-                <p class="text-light mt-2 mx-auto max-width-text" style="font-size: 0.95rem;">
-                    <strong class="text-warning">¿Qué pasa aquí?</strong> Una red masiva de computadoras infectadas (Botnet) bombardea el sistema validando miles de tarjetas. Un Motor de Inteligencia Artificial analiza el tráfico en tiempo real y bloquea conexiones maliciosas.
+        <div class="container h-100 d-flex flex-column justify-content-between z-10 dashboard-content">
+            <div class="text-center mb-4 glass-panel p-4 rounded border-neon-cyan shadow-neon-cyan header-modulo">
+                <h2 class="text-cyan font-monospace fw-bold mb-3 display-6 modulo-title">MÓDULO 2: BOTNET CARDING VS MOTOR IA</h2>
+                <p class="text-white mt-3 mx-auto max-width-text fw-bold lh-base modulo-desc" style="font-size: 1.25rem; text-shadow: 0 2px 5px rgba(0,0,0,0.9);">
+                    <strong class="text-warning fs-4 highlight-text">¿Qué pasa aquí?</strong><br> Una red masiva de computadoras infectadas (Botnet) bombardea el sistema validando miles de tarjetas. Un Motor de Inteligencia Artificial analiza el tráfico en tiempo real y bloquea conexiones maliciosas.
                 </p>
             </div>
             <div class="card custom-card glass-panel border-neon-cyan my-auto" id="modulo2-card">
-                <div class="card-header bg-transparent border-bottom border-info text-cyan fw-bold fs-5 text-center"><i class="fa-solid fa-network-wired"></i> Panel Operativo: Fraude vs IA</div>
+                <div class="card-header bg-transparent border-bottom border-info text-cyan fw-bold fs-5 text-center atk-title"><i class="fa-solid fa-network-wired"></i> Panel Operativo: Fraude vs IA</div>
                 <div class="card-body d-flex gap-4 flex-column flex-md-row p-4">
                     <div class="d-flex flex-column justify-content-center" style="flex: 1;">
                         <button id="btnCarding" class="cyber-btn btn-neon-red w-100 mb-4 py-2">LANZAR BOTNET</button>
-                        <div class="text-danger mb-2 fw-bold fs-6 font-monospace">FUERZA DE ATAQUE</div>
+                        <div class="text-danger mb-2 fw-bold fs-6 font-monospace label-estado">FUERZA DE ATAQUE</div>
                         <div class="progress bg-dark border border-danger shadow-neon-red" style="height: 18px;">
                             <div id="barraAtaque" class="progress-bar bg-danger progress-bar-striped progress-bar-animated" style="width: 0%; transition: width 0.3s ease;"></div>
                         </div>
@@ -116,34 +153,35 @@
                     </div>
                     <div class="d-flex flex-column justify-content-center" style="flex: 1;">
                         <button id="btnDefensa2" class="cyber-btn btn-neon-green w-100 mb-4 py-2" disabled>ACTIVAR MOTOR IA</button>
-                        <div class="text-success mb-2 fw-bold fs-6 font-monospace">EFICIENCIA DE IA</div>
+                        <div class="text-success mb-2 fw-bold fs-6 font-monospace label-estado">EFICIENCIA DE IA</div>
                         <div class="progress bg-dark border border-success shadow-neon-green" style="height: 18px;">
                             <div id="barraDefensa" class="progress-bar bg-success progress-bar-striped progress-bar-animated" style="width: 0%; transition: width 0.3s ease;"></div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="text-end mt-4">
-                <button id="btnIrModulo3" class="cyber-btn btn-neon-cyan px-4 py-2">Siguiente Módulo &gt;</button>
+            <div class="d-flex flex-column flex-md-row justify-content-between gap-3 mt-4 w-100">
+                <button id="btnVolverM1" class="cyber-btn btn-neon-red px-4 py-2"><i class="fa-solid fa-arrow-left"></i> Volver al Módulo 1</button>
+                <button id="btnIrModulo3" class="cyber-btn btn-neon-cyan px-4 py-2">Siguiente Módulo <i class="fa-solid fa-arrow-right"></i></button>
             </div>
         </div>
     </section>
 
     <section id="pantalla-modulo3" class="pantalla-modulo d-none py-5 position-relative">
-        <div class="container h-100 d-flex flex-column justify-content-between z-10">
-            <div class="text-center mb-4 glass-panel p-3 rounded border-neon-cyan">
-                <h2 class="text-cyan font-monospace fw-bold mb-2">MÓDULO 3: INTERCEPCIÓN VS PURGA ZERO-TRUST</h2>
-                <p class="text-light mt-2 mx-auto max-width-text" style="font-size: 0.95rem;">
-                    <strong class="text-warning">¿Qué pasa aquí?</strong> El atacante infiltra virus mediante Phishing. La defensa activa Confianza Cero (Zero-Trust), localizando equipos infectados y cortando conexiones para desinfectar la red.
+        <div class="container h-100 d-flex flex-column justify-content-between z-10 dashboard-content">
+            <div class="text-center mb-4 glass-panel p-4 rounded border-neon-cyan shadow-neon-cyan header-modulo">
+                <h2 class="text-cyan font-monospace fw-bold mb-3 display-6 modulo-title">MÓDULO 3: INTERCEPCIÓN VS PURGA ZERO-TRUST</h2>
+                <p class="text-white mt-3 mx-auto max-width-text fw-bold lh-base modulo-desc" style="font-size: 1.25rem; text-shadow: 0 2px 5px rgba(0,0,0,0.9);">
+                    <strong class="text-warning fs-4 highlight-text">¿Qué pasa aquí?</strong><br> El atacante infiltra virus mediante Phishing. La defensa activa Confianza Cero (Zero-Trust), localizando equipos infectados y cortando conexiones para desinfectar la red de forma aislada.
                 </p>
             </div>
             <div class="row my-auto" id="modulo3-row">
                 <div class="col-md-6 mb-4 mb-md-0">
                     <div class="card custom-card glass-panel border-neon-red h-100" id="card-phishing">
-                        <div class="card-header bg-transparent border-bottom border-danger text-danger fw-bold fs-5 text-center"><i class="fa-solid fa-envelope-open-text"></i> Intercepción (Phishing)</div>
+                        <div class="card-header bg-transparent border-bottom border-danger text-danger fw-bold fs-5 text-center atk-title"><i class="fa-solid fa-envelope-open-text"></i> Intercepción (Phishing)</div>
                         <div class="card-body p-4">
                             <button id="btnPhishing" class="cyber-btn btn-neon-red w-100 mb-4 py-2">DESPLEGAR PAYLOADS</button>
-                            <div class="text-danger mb-2 fw-bold fs-6 font-monospace">INFECCIÓN DE RED</div>
+                            <div class="text-danger mb-2 fw-bold fs-6 font-monospace label-estado">INFECCIÓN DE RED</div>
                             <div class="node-map rounded mb-3 position-relative border-neon-red shadow-neon-red" id="mapaPhishing" style="height: 120px;"></div>
                             <div class="progress bg-dark border border-danger mb-3 shadow-neon-red" style="height: 12px;">
                                 <div id="barraInfeccion" class="progress-bar bg-danger progress-bar-striped progress-bar-animated" style="width: 0%; transition: width 0.3s ease;"></div>
@@ -156,10 +194,10 @@
                 </div>
                 <div class="col-md-6">
                     <div class="card custom-card glass-panel border-neon-green h-100" id="card-zerotrust">
-                        <div class="card-header bg-transparent border-bottom border-success text-success fw-bold fs-5 text-center"><i class="fa-solid fa-shield-virus"></i> Purga Zero-Trust</div>
+                        <div class="card-header bg-transparent border-bottom border-success text-success fw-bold fs-5 text-center def-title"><i class="fa-solid fa-shield-virus"></i> Purga Zero-Trust</div>
                         <div class="card-body p-4">
                             <button id="btnEducacion" class="cyber-btn btn-neon-green w-100 mb-4 py-2" disabled>ACTIVAR ZERO-TRUST</button>
-                            <div class="text-success mb-2 fw-bold fs-6 text-end font-monospace">INTEGRIDAD DEL SISTEMA</div>
+                            <div class="text-success mb-2 fw-bold fs-6 text-end font-monospace label-estado">INTEGRIDAD DEL SISTEMA</div>
                             <div class="node-map rounded mb-3 position-relative border-neon-green shadow-neon-green" id="mapaZeroTrust" style="height: 120px;"></div>
                             <div class="progress bg-dark border border-success mb-3 shadow-neon-green" style="height: 12px;">
                                 <div id="barraIntegridad" class="progress-bar bg-success progress-bar-striped progress-bar-animated" style="width: 100%; transition: width 0.3s ease;"></div>
@@ -171,17 +209,18 @@
                     </div>
                 </div>
             </div>
-            <div class="text-end mt-4">
-                <button id="btnIrGlosario" class="cyber-btn btn-neon-cyan px-4 py-2">Ver Glosario de Términos &gt;</button>
+            <div class="d-flex flex-column flex-md-row justify-content-between gap-3 mt-4 w-100">
+                <button id="btnVolverM2" class="cyber-btn btn-neon-red px-4 py-2"><i class="fa-solid fa-arrow-left"></i> Volver al Módulo 2</button>
+                <button id="btnIrGlosario" class="cyber-btn btn-neon-cyan px-4 py-2">Ver Glosario de Términos <i class="fa-solid fa-arrow-right"></i></button>
             </div>
         </div>
     </section>
 
     <section id="pantalla-glosario" class="pantalla-modulo d-none py-5 position-relative">
-        <div class="container h-100 d-flex flex-column justify-content-between z-10">
-            <div class="text-center mb-5 glass-panel p-3 rounded border-neon-cyan">
-                <h2 class="text-cyan font-monospace display-6 fw-bold">GLOSARIO VISUAL</h2>
-                <p class="text-light mt-2 mx-auto">Pasa el cursor sobre las tarjetas para ver cómo funciona cada concepto.</p>
+        <div class="container h-100 d-flex flex-column justify-content-between z-10 dashboard-content">
+            <div class="text-center mb-5 glass-panel p-4 rounded border-neon-cyan shadow-neon-cyan header-modulo">
+                <h2 class="text-cyan font-monospace display-6 fw-bold modulo-title">GLOSARIO VISUAL</h2>
+                <p class="text-white mt-2 mx-auto fs-5 modulo-desc">Pasa el cursor sobre las tarjetas para ver cómo funciona cada concepto.</p>
             </div>
             
             <div class="row g-4 overflow-auto px-2 pb-4" style="max-height: 65vh;">
@@ -194,18 +233,13 @@
                                 <span class="text-cyan mt-3 fw-bold border border-info rounded-pill px-3 py-1" style="font-size: 0.75rem;"><i class="fa-solid fa-eye"></i> VER EJEMPLO</span>
                             </div>
                             <div class="flip-card-back glass-panel border-neon-cyan p-3 rounded d-flex flex-column justify-content-center align-items-center" style="background: rgba(0, 255, 255, 0.15);">
-                                <div class="d-flex align-items-center gap-3 mb-3 fs-1">
-                                    <i class="fa-solid fa-desktop text-white"></i>
-                                    <i class="fa-solid fa-arrow-right-arrow-left fa-spin text-cyan fs-3"></i>
-                                    <i class="fa-solid fa-gamepad text-white"></i>
-                                </div>
+                                <div class="d-flex align-items-center gap-3 mb-3 fs-1"><i class="fa-solid fa-desktop text-white"></i><i class="fa-solid fa-arrow-right-arrow-left fa-spin text-cyan fs-3"></i><i class="fa-solid fa-gamepad text-white"></i></div>
                                 <h6 class="text-white fw-bold">ES COMO UN SIMULADOR DE VUELO</h6>
                                 <p class="text-light small mt-1 lh-sm">Entrenamos jugando sin arriesgar dinero real.</p>
                             </div>
                         </div>
                     </div>
                 </div>
-
                 <div class="col-md-4">
                     <div class="flip-card h-100">
                         <div class="flip-card-inner">
@@ -215,18 +249,13 @@
                                 <span class="text-danger mt-3 fw-bold border border-danger rounded-pill px-3 py-1" style="font-size: 0.75rem;"><i class="fa-solid fa-eye"></i> VER EJEMPLO</span>
                             </div>
                             <div class="flip-card-back glass-panel border-neon-red p-3 rounded d-flex flex-column justify-content-center align-items-center" style="background: rgba(255, 0, 51, 0.15);">
-                                <div class="d-flex align-items-center gap-3 mb-3 fs-1">
-                                    <i class="fa-solid fa-user-secret fa-bounce text-danger"></i>
-                                    <i class="fa-solid fa-bolt text-warning fs-3"></i>
-                                    <i class="fa-solid fa-building-columns text-white"></i>
-                                </div>
+                                <div class="d-flex align-items-center gap-3 mb-3 fs-1"><i class="fa-solid fa-user-secret fa-bounce text-danger"></i><i class="fa-solid fa-bolt text-warning fs-3"></i><i class="fa-solid fa-building-columns text-white"></i></div>
                                 <h6 class="text-white fw-bold">LOS "LADRONES" DE PRUEBA</h6>
                                 <p class="text-light small mt-1 lh-sm">Hackers contratados para encontrar puntos débiles antes que los malos reales.</p>
                             </div>
                         </div>
                     </div>
                 </div>
-
                 <div class="col-md-4">
                     <div class="flip-card h-100">
                         <div class="flip-card-inner">
@@ -236,17 +265,13 @@
                                 <span class="text-success mt-3 fw-bold border border-success rounded-pill px-3 py-1" style="font-size: 0.75rem;"><i class="fa-solid fa-eye"></i> VER EJEMPLO</span>
                             </div>
                             <div class="flip-card-back glass-panel border-neon-green p-3 rounded d-flex flex-column justify-content-center align-items-center" style="background: rgba(0, 255, 0, 0.15);">
-                                <div class="d-flex align-items-center gap-3 mb-3 fs-1">
-                                    <i class="fa-solid fa-shield-halved fa-beat text-success"></i>
-                                    <i class="fa-solid fa-lock text-white"></i>
-                                </div>
+                                <div class="d-flex align-items-center gap-3 mb-3 fs-1"><i class="fa-solid fa-shield-halved fa-beat text-success"></i><i class="fa-solid fa-lock text-white"></i></div>
                                 <h6 class="text-white fw-bold">LOS GUARDIAS DE ÉLITE</h6>
                                 <p class="text-light small mt-1 lh-sm">Vigilan las cámaras y activan alarmas para atrapar intrusos.</p>
                             </div>
                         </div>
                     </div>
                 </div>
-
                 <div class="col-md-4">
                     <div class="flip-card h-100">
                         <div class="flip-card-inner">
@@ -256,18 +281,13 @@
                                 <span class="text-danger mt-3 fw-bold border border-danger rounded-pill px-3 py-1" style="font-size: 0.75rem;"><i class="fa-solid fa-eye"></i> VER EJEMPLO</span>
                             </div>
                             <div class="flip-card-back glass-panel border-neon-red p-3 rounded d-flex flex-column justify-content-center align-items-center" style="background: rgba(255, 0, 51, 0.15);">
-                                <div class="d-flex align-items-center gap-2 mb-3 fs-1">
-                                    <i class="fa-solid fa-credit-card text-white"></i>
-                                    <i class="fa-solid fa-magnifying-glass fa-shake text-danger fs-3"></i>
-                                    <i class="fa-solid fa-copy text-white"></i>
-                                </div>
+                                <div class="d-flex align-items-center gap-2 mb-3 fs-1"><i class="fa-solid fa-credit-card text-white"></i><i class="fa-solid fa-magnifying-glass fa-shake text-danger fs-3"></i><i class="fa-solid fa-copy text-white"></i></div>
                                 <h6 class="text-white fw-bold">EL ESPÍA INVISIBLE</h6>
                                 <p class="text-light small mt-1 lh-sm">Clonan tu tarjeta justo en el milisegundo que la metes al cajero.</p>
                             </div>
                         </div>
                     </div>
                 </div>
-
                 <div class="col-md-4">
                     <div class="flip-card h-100">
                         <div class="flip-card-inner">
@@ -277,18 +297,13 @@
                                 <span class="text-success mt-3 fw-bold border border-success rounded-pill px-3 py-1" style="font-size: 0.75rem;"><i class="fa-solid fa-eye"></i> VER EJEMPLO</span>
                             </div>
                             <div class="flip-card-back glass-panel border-neon-green p-3 rounded d-flex flex-column justify-content-center align-items-center" style="background: rgba(0, 255, 0, 0.15);">
-                                <div class="d-flex align-items-center gap-3 mb-3 fs-1">
-                                    <i class="fa-solid fa-key text-white"></i>
-                                    <i class="fa-solid fa-plus text-success fs-4"></i>
-                                    <i class="fa-solid fa-face-viewfinder fa-pulse text-success"></i>
-                                </div>
+                                <div class="d-flex align-items-center gap-3 mb-3 fs-1"><i class="fa-solid fa-key text-white"></i><i class="fa-solid fa-plus text-success fs-4"></i><i class="fa-solid fa-face-viewfinder fa-pulse text-success"></i></div>
                                 <h6 class="text-white fw-bold">LA CAJA FUERTE DOBLE</h6>
                                 <p class="text-light small mt-1 lh-sm">No basta con la contraseña, te exige escanear tu rostro o huella.</p>
                             </div>
                         </div>
                     </div>
                 </div>
-
                 <div class="col-md-4">
                     <div class="flip-card h-100">
                         <div class="flip-card-inner">
@@ -298,18 +313,13 @@
                                 <span class="text-danger mt-3 fw-bold border border-danger rounded-pill px-3 py-1" style="font-size: 0.75rem;"><i class="fa-solid fa-eye"></i> VER EJEMPLO</span>
                             </div>
                             <div class="flip-card-back glass-panel border-neon-red p-3 rounded d-flex flex-column justify-content-center align-items-center" style="background: rgba(255, 0, 51, 0.15);">
-                                <div class="d-flex align-items-center gap-2 mb-3 fs-2">
-                                    <i class="fa-solid fa-robot fa-shake text-danger"></i>
-                                    <i class="fa-solid fa-robot fa-shake text-danger" style="animation-delay: 0.2s;"></i>
-                                    <i class="fa-solid fa-robot fa-shake text-danger" style="animation-delay: 0.4s;"></i>
-                                </div>
+                                <div class="d-flex align-items-center gap-2 mb-3 fs-2"><i class="fa-solid fa-robot fa-shake text-danger"></i><i class="fa-solid fa-robot fa-shake text-danger" style="animation-delay: 0.2s;"></i><i class="fa-solid fa-robot fa-shake text-danger" style="animation-delay: 0.4s;"></i></div>
                                 <h6 class="text-white fw-bold">EJÉRCITO ZOMBI</h6>
                                 <p class="text-light small mt-1 lh-sm">Miles de computadoras controladas a distancia atacando a la vez.</p>
                             </div>
                         </div>
                     </div>
                 </div>
-
                 <div class="col-md-4">
                     <div class="flip-card h-100">
                         <div class="flip-card-inner">
@@ -319,18 +329,13 @@
                                 <span class="text-success mt-3 fw-bold border border-success rounded-pill px-3 py-1" style="font-size: 0.75rem;"><i class="fa-solid fa-eye"></i> VER EJEMPLO</span>
                             </div>
                             <div class="flip-card-back glass-panel border-neon-green p-3 rounded d-flex flex-column justify-content-center align-items-center" style="background: rgba(0, 255, 0, 0.15);">
-                                <div class="d-flex align-items-center gap-3 mb-3 fs-1">
-                                    <i class="fa-solid fa-shield-virus text-success"></i>
-                                    <i class="fa-solid fa-bolt fa-fade text-warning fs-3"></i>
-                                    <i class="fa-solid fa-bug-slash text-white"></i>
-                                </div>
+                                <div class="d-flex align-items-center gap-3 mb-3 fs-1"><i class="fa-solid fa-shield-virus text-success"></i><i class="fa-solid fa-bolt fa-fade text-warning fs-3"></i><i class="fa-solid fa-bug-slash text-white"></i></div>
                                 <h6 class="text-white fw-bold">EL PERRO GUARDIÁN</h6>
                                 <p class="text-light small mt-1 lh-sm">Aprende a reconocer a los intrusos y los bloquea en milisegundos.</p>
                             </div>
                         </div>
                     </div>
                 </div>
-
                 <div class="col-md-4">
                     <div class="flip-card h-100">
                         <div class="flip-card-inner">
@@ -340,18 +345,13 @@
                                 <span class="text-danger mt-3 fw-bold border border-danger rounded-pill px-3 py-1" style="font-size: 0.75rem;"><i class="fa-solid fa-eye"></i> VER EJEMPLO</span>
                             </div>
                             <div class="flip-card-back glass-panel border-neon-red p-3 rounded d-flex flex-column justify-content-center align-items-center" style="background: rgba(255, 0, 51, 0.15);">
-                                <div class="d-flex align-items-center gap-3 mb-3 fs-1">
-                                    <i class="fa-solid fa-envelope text-white"></i>
-                                    <i class="fa-solid fa-arrow-right text-danger fs-3"></i>
-                                    <i class="fa-solid fa-skull fa-beat-fade text-danger"></i>
-                                </div>
+                                <div class="d-flex align-items-center gap-3 mb-3 fs-1"><i class="fa-solid fa-envelope text-white"></i><i class="fa-solid fa-arrow-right text-danger fs-3"></i><i class="fa-solid fa-skull fa-beat-fade text-danger"></i></div>
                                 <h6 class="text-white fw-bold">EL CARTERO FALSO</h6>
                                 <p class="text-light small mt-1 lh-sm">Correos engañosos que se hacen pasar por tu banco para robar claves.</p>
                             </div>
                         </div>
                     </div>
                 </div>
-
                 <div class="col-md-4">
                     <div class="flip-card h-100">
                         <div class="flip-card-inner">
@@ -361,22 +361,18 @@
                                 <span class="text-success mt-3 fw-bold border border-success rounded-pill px-3 py-1" style="font-size: 0.75rem;"><i class="fa-solid fa-eye"></i> VER EJEMPLO</span>
                             </div>
                             <div class="flip-card-back glass-panel border-neon-green p-3 rounded d-flex flex-column justify-content-center align-items-center" style="background: rgba(0, 255, 0, 0.15);">
-                                <div class="d-flex align-items-center gap-3 mb-3 fs-1">
-                                    <i class="fa-solid fa-id-card fa-flip text-white"></i>
-                                    <i class="fa-solid fa-check-double text-success fs-3"></i>
-                                    <i class="fa-solid fa-house-lock text-success"></i>
-                                </div>
+                                <div class="d-flex align-items-center gap-3 mb-3 fs-1"><i class="fa-solid fa-id-card fa-flip text-white"></i><i class="fa-solid fa-check-double text-success fs-3"></i><i class="fa-solid fa-house-lock text-success"></i></div>
                                 <h6 class="text-white fw-bold">CONFIANZA CERO</h6>
-                                <p class="text-light small mt-1 lh-sm">Revisa el DNI de todos, incluso de los que ya están dentro de la casa.</p>
+                                <p class="text-light small mt-1 lh-sm">Revisa el DNI de todos, incluso de los que ya están dentro de la red.</p>
                             </div>
                         </div>
                     </div>
                 </div>
-
             </div>
             
-            <div class="text-center mt-4 z-10">
-                <button id="btnReiniciarSimulacion" class="cyber-btn btn-neon-cyan px-5 py-3"><i class="fa-solid fa-rotate-left"></i> Volver al Inicio</button>
+            <div class="d-flex flex-column flex-md-row justify-content-between gap-3 mt-4 z-10 w-100 px-2">
+                <button id="btnVolverM3" class="cyber-btn btn-neon-red px-4 py-3"><i class="fa-solid fa-arrow-left"></i> Volver al Módulo 3</button>
+                <button id="btnReiniciarSimulacion" class="cyber-btn btn-neon-cyan px-5 py-3"><i class="fa-solid fa-rotate-left"></i> Volver al Dashboard</button>
             </div>
         </div>
     </section>
